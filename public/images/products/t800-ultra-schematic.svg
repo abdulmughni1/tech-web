@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#27272A" stroke-width="0.8" opacity="0.35"/>
+    </pattern>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#18181B" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0E0E11" stop-opacity="1"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="800" fill="url(#vignette)"/>
+  <rect width="800" height="800" fill="url(#grid)"/>
+
+  <!-- Border Frame -->
+  <rect x="24" y="24" width="752" height="752" fill="none" stroke="#27272A" stroke-width="1"/>
+
+  <!-- Corner Registration Marks -->
+  <path d="M 24 40 L 40 40 L 40 24" fill="none" stroke="#A1A1AA" stroke-width="1.2"/>
+  <path d="M 776 40 L 760 40 L 760 24" fill="none" stroke="#A1A1AA" stroke-width="1.2"/>
+  <path d="M 24 760 L 40 760 L 40 776" fill="none" stroke="#A1A1AA" stroke-width="1.2"/>
+  <path d="M 776 760 L 760 760 L 760 776" fill="none" stroke="#A1A1AA" stroke-width="1.2"/>
+
+  <!-- Header Technical Spec Bar -->
+  <text x="44" y="56" fill="#A1A1AA" font-family="'IBM Plex Mono', monospace" font-size="11" letter-spacing="2">DEXYFIED // HARDWARE SCHEMATIC</text>
+  <text x="756" y="56" text-anchor="end" fill="#FF5500" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="600" letter-spacing="1.5">ITEM REF: DX-08</text>
+  <line x1="44" y1="70" x2="756" y2="70" stroke="#27272A" stroke-width="1"/>
+
+  <!-- Central Engineering Drawing -->
+  
+  <g transform="translate(400, 390)">
+    <!-- Ocean Wave Ribbed Strap Top & Bottom -->
+    <g transform="translate(-75, -270)">
+      <rect x="0" y="0" width="150" height="120" rx="8" fill="#1C1C21" stroke="#3F3F46" stroke-width="2"/>
+      <ellipse cx="75" cy="25" rx="50" ry="8" fill="#09090B"/>
+      <ellipse cx="75" cy="65" rx="50" ry="8" fill="#09090B"/>
+      <ellipse cx="75" cy="105" rx="50" ry="8" fill="#09090B"/>
+    </g>
+    <g transform="translate(-75, 150)">
+      <rect x="0" y="0" width="150" height="120" rx="8" fill="#1C1C21" stroke="#3F3F46" stroke-width="2"/>
+      <ellipse cx="75" cy="25" rx="50" ry="8" fill="#09090B"/>
+      <ellipse cx="75" cy="65" rx="50" ry="8" fill="#09090B"/>
+      <ellipse cx="75" cy="105" rx="50" ry="8" fill="#09090B"/>
+    </g>
+
+    <!-- Watch Frame -->
+    <rect x="-150" y="-160" width="300" height="320" rx="44" fill="#18181B" stroke="#71717A" stroke-width="2.5"/>
+
+    <!-- Left Speaker Slots -->
+    <line x1="-155" y1="-30" x2="-155" y2="-10" stroke="#FF5500" stroke-width="3"/>
+    <line x1="-155" y1="10" x2="-155" y2="30" stroke="#FF5500" stroke-width="3"/>
+
+    <!-- Working Crown Dial -->
+    <rect x="150" y="-75" width="20" height="55" rx="4" fill="#27272A" stroke="#A1A1AA" stroke-width="2"/>
+    <rect x="150" y="25" width="12" height="42" rx="3" fill="#27272A" stroke="#52525B" stroke-width="1.5"/>
+
+    <!-- Screen Bezel -->
+    <rect x="-126" y="-136" width="252" height="272" rx="28" fill="#09090B" stroke="#27272A" stroke-width="2"/>
+
+    <!-- Watch Screen Info -->
+    <text x="0" y="-45" text-anchor="middle" fill="#FF5500" font-family="'Space Grotesk', sans-serif" font-size="32" font-weight="700">12:30</text>
+    <text x="0" y="-15" text-anchor="middle" fill="#A1A1AA" font-family="'IBM Plex Mono', monospace" font-size="11">DUAL SPEAKER AUDIO</text>
+    
+    <!-- Steps & Calorie Progress -->
+    <rect x="-80" y="15" width="160" height="12" rx="6" fill="#18181B" stroke="#27272A"/>
+    <rect x="-80" y="15" width="105" height="12" rx="6" fill="#FF5500"/>
+
+    <text x="0" y="55" text-anchor="middle" fill="#FAFAFA" font-family="'IBM Plex Mono', monospace" font-size="12">6,420 STEPS</text>
+    <text x="0" y="85" text-anchor="middle" fill="#71717A" font-family="'IBM Plex Mono', monospace" font-size="10">WORKING CROWN DIAL</text>
+  </g>
+  
+
+  <!-- Footer Technical Annotation -->
+  <line x1="44" y1="730" x2="756" y2="730" stroke="#27272A" stroke-width="1"/>
+  <text x="44" y="752" fill="#71717A" font-family="'IBM Plex Mono', monospace" font-size="10" letter-spacing="1">DIMENSIONS: 48.1 × 44.6 × 14.0 MM // 44MM STRAP SLOT</text>
+  <text x="756" y="752" text-anchor="end" fill="#71717A" font-family="'IBM Plex Mono', monospace" font-size="10" letter-spacing="1">STUDIO PHOTOGRAPHY INGESTION PENDING</text>
+</svg>

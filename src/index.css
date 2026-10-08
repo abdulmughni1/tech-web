@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-main: #FAFAFA;
+    --surface-main: #FFFFFF;
+    --surface-secondary: #F4F4F5;
+    --border-main: #E4E4E7;
+    --border-subtle: #F1F1F3;
+    --text-primary: #09090B;
+    --text-muted: #52525B;
+    --text-dim: #71717A;
+    --accent-blue: #0066FF;
+    --accent-cyan: #00E5FF;
+  }
+
+  body {
+    background-color: #FAFAFA;
+    color: #09090B;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Custom subtle technical scrollbar for clean light mode */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F4F4F5;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #D4D4D8;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #A1A1AA;
+  }
+}
+
+@layer utilities {
+  .font-tech {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .font-display {
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .industrial-border {
+    border: 1px solid #E4E4E7;
+  }
+  .industrial-border-b {
+    border-bottom: 1px solid #E4E4E7;
+  }
+  .industrial-border-t {
+    border-top: 1px solid #E4E4E7;
+  }
+  .subtle-grid {
+    background-size: 32px 32px;
+    background-image: 
+      linear-gradient(to right, rgba(228, 228, 231, 0.6) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(228, 228, 231, 0.6) 1px, transparent 1px);
+  }
+}
