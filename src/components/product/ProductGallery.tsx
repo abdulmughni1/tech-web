@@ -37,17 +37,11 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({
   return (
     <div className="flex flex-col gap-3 w-full">
       {/* Primary Display Stage */}
-      <div className="relative aspect-square w-full bg-[#F8F9FA] border border-[#E4E4E7] flex items-center justify-center p-6 md:p-12 overflow-hidden shadow-2xs">
+      <div className="relative aspect-square w-full bg-[#F8F9FA] dark:bg-[#0B1020] border border-[#E2E8F0] dark:border-[#1E293B] flex items-center justify-center p-6 md:p-12 overflow-hidden shadow-2xs rounded-[2px] transition-colors">
         {/* Technical Corner Markers */}
-        <div className="absolute top-3 left-3 font-tech text-[10px] text-[#71717A] tracking-wider uppercase font-medium">
+        <div className="absolute top-3 left-3 font-tech text-[10px] text-[#71717A] dark:text-[#718096] tracking-wider uppercase font-medium">
           FRAME // 0{activeImageIndex + 1} OF 0{Math.max(1, product.images.length)}
         </div>
-
-        {selectedVariant && (
-          <div className="absolute top-3 right-3 font-tech text-[10px] text-[#09090B] font-bold tracking-wider uppercase border border-[#E4E4E7] px-2 py-0.5 bg-white shadow-2xs">
-            FINISH: {selectedVariant.name}
-          </div>
-        )}
 
         <img
           src={activeImage.url}
@@ -56,12 +50,12 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({
         />
 
         {/* Subtle Bottom Spec Reference */}
-        <div className="absolute bottom-3 left-3 font-tech text-[10px] text-[#71717A] tracking-wider uppercase font-medium">
+        <div className="absolute bottom-3 left-3 font-tech text-[10px] text-[#71717A] dark:text-[#718096] tracking-wider uppercase font-medium">
           ID: {product.slug}
         </div>
       </div>
 
-      {/* Thumbnails (only if multiple angles/finishes) */}
+      {/* Thumbnails (only if multiple angles) */}
       {product.images.length > 1 && (
         <div className="grid grid-cols-4 gap-2">
           {product.images.map((img, idx) => (
@@ -69,10 +63,10 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({
               key={idx}
               type="button"
               onClick={() => setActiveImageIndex(idx)}
-              className={`relative aspect-square bg-[#F8F9FA] border p-2 flex items-center justify-center transition-all ${
+              className={`relative aspect-square bg-[#F8F9FA] dark:bg-[#0B1020] border p-2 flex items-center justify-center transition-all rounded-[2px] cursor-pointer ${
                 activeImageIndex === idx
-                  ? 'border-[#0066FF] ring-1 ring-[#0066FF] bg-white'
-                  : 'border-[#E4E4E7] hover:border-[#09090B]'
+                  ? 'border-[#0866FF] dark:border-[#3D82FF] ring-1 ring-[#0866FF] dark:ring-[#3D82FF] bg-white dark:bg-[#111A2D]'
+                  : 'border-[#E2E8F0] dark:border-[#1E293B] hover:border-[#09090B] dark:hover:border-slate-300'
               }`}
             >
               <img
@@ -80,11 +74,6 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({
                 alt={img.alt || `${product.name} angle ${idx + 1}`}
                 className="max-h-[90%] max-w-[90%] object-contain"
               />
-              {img.variantColor && (
-                <span className="absolute bottom-1 right-1 font-tech text-[9px] text-[#52525B] bg-white px-1 border border-[#E4E4E7]">
-                  {img.variantColor.slice(0, 3).toUpperCase()}
-                </span>
-              )}
             </button>
           ))}
         </div>

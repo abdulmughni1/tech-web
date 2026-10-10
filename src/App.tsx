@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ThemeProvider } from './context/ThemeContext';
 import { CartProvider } from './context/CartContext';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
@@ -74,7 +75,7 @@ export function AppContent() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FAFAFA] text-[#09090B]">
+    <div className="flex flex-col min-h-screen bg-white dark:bg-[#0B1020] text-[#09090B] dark:text-[#F4F7FC] transition-colors duration-200">
       <Header
         currentTab={currentPage}
         onNavigate={navigateTo}
@@ -151,8 +152,10 @@ export function AppContent() {
 
 export default function App() {
   return (
-    <CartProvider>
-      <AppContent />
-    </CartProvider>
+    <ThemeProvider>
+      <CartProvider>
+        <AppContent />
+      </CartProvider>
+    </ThemeProvider>
   );
 }

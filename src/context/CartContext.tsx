@@ -4,9 +4,9 @@ import { SHIPPING_FEE } from '../data/products';
 
 interface CartContextType {
   items: CartItem[];
-  addToCart: (product: Product, variant: ProductVariant, quantity?: number) => void;
-  removeFromCart: (productId: string, variantId: string) => void;
-  updateQuantity: (productId: string, variantId: string, quantity: number) => void;
+  addToCart: (product: Product, variant: ProductVariant, quantity?: number, ringSize?: string) => void;
+  removeFromCart: (productId: string, variantId: string, ringSize?: string) => void;
+  updateQuantity: (productId: string, variantId: string, quantity: number, ringSize?: string) => void;
   clearCart: () => void;
   totalItems: number;
   subtotal: number;
@@ -17,7 +17,7 @@ interface CartContextType {
   setIsCartOpen: (open: boolean) => void;
   isCheckoutOpen: boolean;
   setIsCheckoutOpen: (open: boolean) => void;
-  quickBuy: (product: Product, variant: ProductVariant, quantity?: number) => void;
+  quickBuy: (product: Product, variant: ProductVariant, quantity?: number, ringSize?: string) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -45,10 +45,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [items]);
 
-  const addToCart = (product: Product, variant: ProductVariant, quantity = 1) => {
+  const addToCart = (product: Product, variant: ProductVariant, quantity = 1, ringSize?: string) => {
     setItems(prev => {
       const existingIndex = prev.findIndex(
-        i => i.productId === product.id && i.variantId === variant.id
+        i => i.productId === product.id && i.variantId === variant.id && (i.ringSize || '') === (ringSize || '')
       );
 
       // Select fallback image
@@ -78,6 +78,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
           originalPrice: product.originalPrice,
           quantity,
           image: selectedImage,
+          ringSize: ringSize || undefined,
         },
       ];
     });
@@ -85,24 +86,28 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsCartOpen(true);
   };
 
-  const quickBuy = (product: Product, variant: ProductVariant, quantity = 1) => {
-    addToCart(product, variant, quantity);
+  const quickBuy = (product: Product, variant: ProductVariant, quantity = 1, ringSize?: string) => {
+    addToCart(product, variant, quantity, ringSize);
     setIsCartOpen(false);
     setIsCheckoutOpen(true);
   };
 
-  const removeFromCart = (productId: string, variantId: string) => {
-    setItems(prev => prev.filter(i => !(i.productId === productId && i.variantId === variantId)));
+  const removeFromCart = (productId: string, variantId: string, ringSize?: string) => {
+    setItems(prev =>
+      prev.filter(
+        i => !(i.productId === productId && i.variantId === variantId && (i.ringSize || '') === (ringSize || ''))
+      )
+    );
   };
 
-  const updateQuantity = (productId: string, variantId: string, quantity: number) => {
+  const updateQuantity = (productId: string, variantId: string, quantity: number, ringSize?: string) => {
     if (quantity <= 0) {
-      removeFromCart(productId, variantId);
+      removeFromCart(productId, variantId, ringSize);
       return;
     }
     setItems(prev =>
       prev.map(i =>
-        i.productId === productId && i.variantId === variantId
+        i.productId === productId && i.variantId === variantId && (i.ringSize || '') === (ringSize || '')
           ? { ...i, quantity }
           : i
       )

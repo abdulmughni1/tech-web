@@ -55,11 +55,11 @@ export const DexyfiedLogo: React.FC<DexyfiedLogoProps> = ({
 
       {variant !== 'mark-only' && (
         <div className="flex flex-col justify-center leading-none">
-          <span className={`font-display font-bold text-[#09090B] uppercase ${sizeClasses.text}`}>
+          <span className={`font-display font-bold text-[#09090B] dark:text-[#F4F7FC] transition-colors uppercase ${sizeClasses.text}`}>
             DEXYFIED
           </span>
           {showSubtitle && (
-            <span className={`font-tech text-[#71717A] uppercase mt-0.5 ${sizeClasses.sub}`}>
+            <span className={`font-tech text-[#71717A] dark:text-[#A4AEC0] transition-colors uppercase mt-0.5 ${sizeClasses.sub}`}>
               HARDWARE // PAKISTAN
             </span>
           )}

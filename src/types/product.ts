@@ -48,6 +48,7 @@ export interface CartItem {
   originalPrice: number;
   quantity: number;
   image: string;
+  ringSize?: string;
 }
 
 export interface ShippingDetails {
@@ -63,5 +64,5 @@ export interface OrderFormState {
   city: string;
   address: string;
   notes?: string;
-  paymentMethod: 'cod' | 'whatsapp';
+  paymentMethod: 'meezan' | 'jazzcash' | 'easypaisa' | 'cod' | 'whatsapp';
 }

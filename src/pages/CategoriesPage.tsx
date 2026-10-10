@@ -38,17 +38,17 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
   const domainCategories = CATEGORIES.filter(c => c !== 'All');
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] py-16">
+    <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#09090B] py-16 transition-colors duration-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="border-b border-[#E4E4E7] pb-6 mb-12">
-          <div className="flex items-center gap-2 font-tech text-xs text-[#52525B] uppercase tracking-widest mb-1 font-semibold">
+        <div className="border-b border-[#E4E4E7] dark:border-[#27272A] pb-6 mb-12">
+          <div className="flex items-center gap-2 font-tech text-xs text-[#52525B] dark:text-[#A1A1AA] uppercase tracking-widest mb-1 font-semibold">
             <span className="w-2 h-2 rounded-full bg-[#0066FF]"></span>
             <span>SYSTEM DIRECTORY // CATEGORIES</span>
           </div>
-          <h1 className="font-display font-bold text-3xl sm:text-4xl uppercase text-[#09090B]">
+          <h1 className="font-display font-bold text-3xl sm:text-4xl uppercase text-[#09090B] dark:text-[#F4F4F5]">
             Hardware Categories
           </h1>
-          <p className="text-xs text-[#52525B] font-sans mt-2 max-w-xl">
+          <p className="text-xs text-[#52525B] dark:text-[#A1A1AA] font-sans mt-2 max-w-xl">
             Explore DEXYFIED physical electronics structured by functional discipline.
           </p>
         </div>
@@ -65,15 +65,15 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
             return (
               <div
                 key={cat}
-                className="border border-[#E4E4E7] bg-white p-6 sm:p-8 flex flex-col justify-between hover:border-[#09090B] transition-all shadow-2xs"
+                className="border border-[#E4E4E7] dark:border-[#27272A] bg-white dark:bg-[#121214] p-6 sm:p-8 flex flex-col justify-between hover:border-[#09090B] dark:hover:border-[#71717A] transition-all rounded-[2px]"
               >
                 <div>
-                  <div className="flex items-center justify-between pb-4 border-b border-[#E4E4E7]">
+                  <div className="flex items-center justify-between pb-4 border-b border-[#E4E4E7] dark:border-[#27272A]">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 border border-[#E4E4E7] bg-[#F4F4F5]">
+                      <div className="p-2 border border-[#E4E4E7] dark:border-[#27272A] bg-[#F4F4F5] dark:bg-[#18181B] rounded-[2px]">
                         {meta.icon}
                       </div>
-                      <h2 className="font-display font-bold text-xl uppercase tracking-wider text-[#09090B]">
+                      <h2 className="font-display font-bold text-xl uppercase tracking-wider text-[#09090B] dark:text-[#F4F4F5]">
                         {cat}
                       </h2>
                     </div>
@@ -82,7 +82,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                     </span>
                   </div>
 
-                  <p className="font-sans text-xs text-[#52525B] mt-4 leading-relaxed">
+                  <p className="font-sans text-xs text-[#52525B] dark:text-[#A1A1AA] mt-4 leading-relaxed">
                     {meta.desc}
                   </p>
 
@@ -92,10 +92,10 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                       <div
                         key={p.id}
                         onClick={() => onSelectProduct(p)}
-                        className="p-3 border border-[#E4E4E7] bg-[#F8F9FA] hover:border-[#0066FF] cursor-pointer flex items-center justify-between transition-colors group shadow-2xs"
+                        className="p-3 border border-[#E4E4E7] dark:border-[#27272A] bg-[#FAFAFA] dark:bg-[#18181B] hover:border-[#0066FF] cursor-pointer flex items-center justify-between transition-colors group rounded-[2px]"
                       >
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-white border border-[#E4E4E7] p-1 flex items-center justify-center flex-shrink-0">
+                          <div className="w-10 h-10 bg-white dark:bg-[#121214] border border-[#E4E4E7] dark:border-[#27272A] p-1 flex items-center justify-center flex-shrink-0 rounded-[2px]">
                             <img
                               src={p.images[0]?.url}
                               alt={p.name}
@@ -103,7 +103,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                             />
                           </div>
                           <div>
-                            <div className="font-display text-xs font-semibold text-[#09090B] group-hover:text-[#0066FF] line-clamp-1">
+                            <div className="font-display text-xs font-semibold text-[#09090B] dark:text-[#F4F4F5] group-hover:text-[#0066FF] line-clamp-1 transition-colors">
                               {p.name}
                             </div>
                             <div className="font-tech text-[10px] text-[#71717A]">
@@ -114,7 +114,7 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
 
                         <div className="text-right flex items-center gap-2">
                           <div>
-                            <div className="font-tech text-xs font-bold text-[#09090B]">
+                            <div className="font-tech text-xs font-bold text-[#09090B] dark:text-[#F4F4F5]">
                               PKR {p.salePrice.toLocaleString()}
                             </div>
                             <div className="font-tech text-[10px] text-[#71717A] line-through">
@@ -128,10 +128,10 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                   </div>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-[#E4E4E7]">
+                <div className="mt-8 pt-4 border-t border-[#E4E4E7] dark:border-[#27272A]">
                   <button
                     onClick={() => onSelectCategory(cat)}
-                    className="w-full py-2.5 px-4 font-tech text-xs uppercase tracking-wider border border-[#E4E4E7] bg-[#F4F4F5] hover:border-[#0066FF] hover:text-[#0066FF] text-[#09090B] transition-colors flex items-center justify-center gap-2 font-semibold cursor-pointer"
+                    className="w-full py-2.5 px-4 font-tech text-xs uppercase tracking-wider border border-[#E4E4E7] dark:border-[#27272A] bg-[#F4F4F5] dark:bg-[#18181B] hover:border-[#0066FF] hover:text-[#0066FF] text-[#09090B] dark:text-[#F4F4F5] transition-colors flex items-center justify-center gap-2 font-semibold cursor-pointer rounded-[2px]"
                   >
                     <span>VIEW ALL {cat.toUpperCase()} IN SHOP</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
