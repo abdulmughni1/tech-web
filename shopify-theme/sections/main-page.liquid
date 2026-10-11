@@ -1,0 +1,53 @@
+{% comment %}
+  DEXYFIED Editorial Page Section
+  For About, Contact, Refund Policy, Shipping Policy, Privacy Policy, Terms
+{% endcomment %}
+
+<div style="background-color: var(--bg-surface); padding-top: 2.5rem; padding-bottom: 6rem;">
+  <div class="dexy-container" style="max-width: 48rem;">
+    <!-- Page Header -->
+    <div style="padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-main); margin-bottom: 2.5rem;">
+      <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.25rem; font-weight: 700;">
+        DEXYFIED DOCUMENTATION // OFFICIAL
+      </span>
+      <h1 style="font-family: var(--font-display); font-weight: 700; font-size: 2.25rem; text-transform: uppercase; color: var(--text-primary); margin: 0; line-height: 1.15;">
+        {{ page.title }}
+      </h1>
+    </div>
+
+    <!-- Page Content -->
+    <div style="font-family: var(--font-sans); font-size: 0.875rem; color: var(--text-primary); line-height: 1.7;" class="page-content">
+      {{ page.content }}
+    </div>
+  </div>
+</div>
+
+<style>
+  .page-content h2, .page-content h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+  }
+  .page-content p {
+    margin-bottom: 1.25rem;
+    color: var(--text-muted);
+  }
+  .page-content ul {
+    margin-bottom: 1.25rem;
+    padding-left: 1.25rem;
+    color: var(--text-muted);
+  }
+  .page-content li {
+    margin-bottom: 0.5rem;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Page Content",
+  "settings": []
+}
+{% endschema %}

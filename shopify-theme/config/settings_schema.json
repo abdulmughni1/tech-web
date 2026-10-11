@@ -1,0 +1,59 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "DEXYFIED Official",
+    "theme_version": "1.0.0",
+    "theme_author": "DEXYFIED",
+    "theme_documentation_url": "https://dexyfied.store",
+    "theme_support_url": "https://dexyfied.store"
+  },
+  {
+    "name": "Branding & Contact",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image"
+      },
+      {
+        "type": "text",
+        "id": "support_phone",
+        "label": "Support Phone",
+        "default": "+92 319 4389617"
+      },
+      {
+        "type": "text",
+        "id": "support_email",
+        "label": "Support Email",
+        "default": "dexyfied@gmail.com"
+      },
+      {
+        "type": "text",
+        "id": "shipping_fee",
+        "label": "Flat Shipping Fee (PKR)",
+        "default": "150"
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_instagram_link",
+        "label": "Instagram profile link"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook_link",
+        "label": "Facebook page link"
+      },
+      {
+        "type": "url",
+        "id": "social_whatsapp_link",
+        "label": "WhatsApp link",
+        "default": "https://wa.me/923194389617"
+      }
+    ]
+  }
+]

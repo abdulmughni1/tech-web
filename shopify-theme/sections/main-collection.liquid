@@ -1,0 +1,82 @@
+{% comment %}
+  DEXYFIED Main Collection Catalog Section
+  Category filter tabs, product count, and responsive product grid
+{% endcomment %}
+
+<div style="background-color: var(--bg-surface); padding-top: 2rem; padding-bottom: 5rem;">
+  <div class="dexy-container">
+    <!-- Header -->
+    <div style="padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-main); margin-bottom: 2rem;">
+      <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.25rem; font-weight: 700;">
+        DEXYFIED CATALOG // HARDWARE
+      </span>
+      <h1 style="font-family: var(--font-display); font-weight: 700; font-size: 2.25rem; text-transform: uppercase; color: var(--text-primary); margin: 0;">
+        {{ collection.title | default: 'All Hardware Products' }}
+      </h1>
+      <p style="font-family: var(--font-sans); font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.5rem; max-width: 32rem;">
+        {{ collection.description | default: 'Physical consumer hardware selected for utility, honest specifications, and everyday reliability.' }}
+      </p>
+
+      <!-- Category Navigation Pills -->
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.25rem;">
+        <a href="{{ routes.all_products_collection_url }}" class="btn-tech {% if collection.handle == 'all' or collection.handle == blank %}active{% endif %}">
+          All Products
+        </a>
+        <a href="/collections/workspace" class="btn-tech {% if collection.handle == 'workspace' %}active{% endif %}">
+          Workspace
+        </a>
+        <a href="/collections/audio" class="btn-tech {% if collection.handle == 'audio' %}active{% endif %}">
+          Audio & Cases
+        </a>
+        <a href="/collections/smart-watches" class="btn-tech {% if collection.handle == 'smart-watches' %}active{% endif %}">
+          Smart Watches
+        </a>
+        <a href="/collections/wearables" class="btn-tech {% if collection.handle == 'wearables' %}active{% endif %}">
+          Wearables
+        </a>
+      </div>
+    </div>
+
+    <!-- Product Count & Sort Bar -->
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-muted);">
+      <div>
+        SHOWING {{ collection.products_count }} PRODUCTS
+      </div>
+      <div>
+        FLAT PKR 150 SHIPPING NATIONWIDE
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;" class="catalog-grid">
+      {% for product in collection.products %}
+        {% render 'product-card', product: product %}
+      {% else %}
+        <div style="grid-column: 1 / -1; padding: 4rem 1rem; text-align: center; font-family: var(--font-tech);">
+          No products found in this category.
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  @media (min-width: 768px) {
+    .catalog-grid {
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 1.5rem !important;
+    }
+  }
+  @media (min-width: 1280px) {
+    .catalog-grid {
+      grid-template-columns: repeat(4, 1fr) !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Main Collection",
+  "settings": []
+}
+{% endschema %}

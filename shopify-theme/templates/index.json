@@ -1,0 +1,48 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-laptop-stand",
+      "settings": {
+        "headline": "A Better Setup Starts Here.",
+        "subheading": "Give your workspace a cleaner, more comfortable setup with our adjustable portable laptop stand."
+      }
+    },
+    "trust": {
+      "type": "trust-bar",
+      "settings": {}
+    },
+    "essentials": {
+      "type": "engineered-essentials",
+      "settings": {}
+    },
+    "spotlight": {
+      "type": "product-spotlight",
+      "settings": {}
+    },
+    "catalog": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "COMPLETE INVENTORY // ALL 8 HARDWARE PRODUCTS",
+        "title": "Current Catalog",
+        "products_to_show": 8
+      }
+    },
+    "reviews": {
+      "type": "customer-reviews",
+      "settings": {}
+    },
+    "standards": {
+      "type": "commercial-standards",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "trust",
+    "essentials",
+    "spotlight",
+    "catalog",
+    "reviews",
+    "standards"
+  ]
+}

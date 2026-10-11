@@ -1,0 +1,595 @@
+{% comment %}
+  DEXYFIED Main Product Detail Page Section
+  Complete PDP reproducing React ProductDetailPage.tsx:
+  - Technical reference breadcrumb
+  - Gallery with thumbnails
+  - Dynamic finish swatches (Silver/Black) and Ring size selector (6-21)
+  - Ergonomic benefits checklist for laptop stand
+  - Package contents card
+  - Transparent pricing & nationwide PKR 150 logistics guarantee
+  - Add to Bag + Buy Now with Cash on Delivery (COD)
+  - WhatsApp direct support link
+  - Technical specifications table
+  - Mobile sticky buy bar
+{% endcomment %}
+
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign savings = 0
+  if current_variant.compare_at_price > current_variant.price
+    assign savings = current_variant.compare_at_price | minus: current_variant.price
+  endif
+
+  assign is_laptop_stand = false
+  if product.handle contains 'laptop-stand'
+    assign is_laptop_stand = true
+  endif
+
+  assign is_ring = false
+  if product.handle contains 'ring'
+    assign is_ring = true
+  endif
+
+  assign ref_tag = 'DX-01'
+  for tag in product.tags
+    if tag contains 'DX-'
+      assign ref_tag = tag
+      break
+    endif
+  endfor
+-%}
+
+<div style="background-color: var(--bg-surface); padding-bottom: 6rem;">
+  <!-- Breadcrumb & Return Action -->
+  <div style="border-bottom: 1px solid var(--border-main); background-color: var(--bg-surface-elevated); padding: 0.875rem 0;">
+    <div class="dexy-container" style="display: flex; align-items: center; justify-content: space-between;">
+      <a
+        href="{{ routes.all_products_collection_url }}"
+        style="display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; text-decoration: none;"
+      >
+        <span>←</span>
+        <span>BACK TO CATALOG</span>
+      </a>
+
+      <div style="font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 500;">
+        REF // {{ ref_tag }} • {{ product.type | default: 'HARDWARE' }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Product Container -->
+  <div class="dexy-container" style="padding-top: 2rem;">
+    <div style="display: grid; grid-template-columns: 1fr; gap: 2.5rem;" class="pdp-grid">
+      <!-- Left Column: Gallery & Package Contents -->
+      <div>
+        <div style="position: sticky; top: 5.5rem;">
+          <!-- Main Display Image Frame -->
+          {%- liquid
+            assign main_image_src = 'dexyfied-logo-raw.jpg' | asset_url
+            if product.featured_media != blank
+              assign main_image_src = product.featured_media | image_url: width: 900
+            elsif product.handle contains 'laptop-stand'
+              assign main_image_src = 'laptop-stand-silver.png' | asset_url
+            elsif product.handle contains 'airpods'
+              assign main_image_src = 'airpods-case-black.png' | asset_url
+            elsif product.handle contains 'headphones'
+              assign main_image_src = 'wireless-headphones.png' | asset_url
+            elsif product.handle contains 'ring'
+              assign main_image_src = 'luminous-ring.png' | asset_url
+            elsif product.handle contains 'i9-ultra-max'
+              assign main_image_src = 'i9-ultra-max.png' | asset_url
+            elsif product.handle contains 't900'
+              assign main_image_src = 't900-ultra-2.png' | asset_url
+            elsif product.handle contains 't800'
+              assign main_image_src = 't800-ultra.png' | asset_url
+            endif
+          -%}
+          <div style="border: 1px solid var(--border-main); background: var(--bg-surface-subtle); padding: 1.5rem; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-xs); box-shadow: var(--shadow-2xs); overflow: hidden;">
+            <img
+              id="pdpMainImage"
+              data-gallery-main-image
+              src="{{ main_image_src }}"
+              alt="{{ product.featured_media.alt | default: product.title | escape }}"
+              style="max-height: 88%; max-width: 88%; object-fit: contain; transition: transform 0.25s ease;"
+            >
+          </div>
+
+          <!-- Thumbnails Strip -->
+          {% if product.media.size > 1 %}
+            <div style="display: flex; gap: 0.75rem; margin-top: 1rem; overflow-x: auto; padding-bottom: 0.5rem;">
+              {% for media in product.media %}
+                <div
+                  data-gallery-thumb
+                  data-full-src="{{ media | image_url: width: 900 }}"
+                  data-alt="{{ media.alt | default: product.title | escape }}"
+                  style="width: 4.5rem; height: 4.5rem; border: 1px solid var(--border-main); background: var(--bg-surface-subtle); display: flex; align-items: center; justify-content: center; padding: 0.375rem; border-radius: var(--radius-xs); cursor: pointer; flex-shrink: 0;"
+                  class="{% if forloop.first %}active{% endif %}"
+                >
+                  <img src="{{ media | image_url: width: 140 }}" alt="{{ media.alt | default: product.title | escape }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <!-- Package Contents Box -->
+          <div style="margin-top: 1.75rem; padding: 1.25rem; border: 1px solid var(--border-main); background: var(--bg-surface-elevated); border-radius: var(--radius-xs);">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m7.5 4.27 9 5.15"></path>
+                <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path>
+                <path d="m3.3 7 8.7 5 8.7-5"></path>
+                <path d="M12 22V12"></path>
+              </svg>
+              <h4 style="font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin: 0; color: var(--text-primary);">
+                PACKAGE CONTENTS
+              </h4>
+            </div>
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.375rem; font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-muted);">
+              <li>• 1 × {{ product.title }}</li>
+              {% if is_laptop_stand %}
+                <li>• 1 × Protective Travel Sleeve</li>
+              {% endif %}
+              <li>• 1 × Technical Documentation & QC Check</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Purchasing, Options, Features & Specs -->
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <!-- Title & Category Header -->
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 600;">
+            <span>{{ product.type | default: 'HARDWARE' }}</span>
+            <span>//</span>
+            <span>ITEM {{ ref_tag }}</span>
+          </div>
+
+          <h1 style="font-family: var(--font-display); font-weight: 700; font-size: 2rem; color: var(--text-primary); text-transform: uppercase; line-height: 1.15; margin: 0;">
+            {{ product.title }}
+          </h1>
+
+          <p style="font-family: var(--font-sans); font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; margin-top: 0.5rem;">
+            {{ product.description | strip_html | truncatewords: 28 }}
+          </p>
+        </div>
+
+        <!-- Pricing & Transparent Savings Box -->
+        <div style="padding: 1.25rem; border: 1px solid var(--border-main); background: var(--bg-surface); border-radius: var(--radius-xs); box-shadow: var(--shadow-2xs);">
+          <div style="display: flex; align-items: baseline; justify-content: space-between;">
+            <div>
+              {% if current_variant.compare_at_price > current_variant.price %}
+                <span id="pdpComparePrice" style="font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-dim); text-decoration: line-through; text-transform: uppercase; display: block;">
+                  ORIGINAL: {{ current_variant.compare_at_price | money_without_trailing_zeros }}
+                </span>
+              {% endif %}
+              <div style="margin-top: 2px;">
+                <span id="pdpPrice" style="font-family: var(--font-display); font-weight: 700; font-size: 2rem; color: var(--text-primary);">
+                  {{ current_variant.price | money_without_trailing_zeros }}
+                </span>
+              </div>
+            </div>
+
+            {% if savings > 0 %}
+              <div id="pdpSavingsPill" class="tech-badge-blue" style="font-size: 0.6875rem; padding: 0.25rem 0.625rem;">
+                SAVE {{ savings | money_without_trailing_zeros }}
+              </div>
+            {% endif %}
+          </div>
+
+          <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border-main); display: flex; align-items: center; justify-content: space-between; font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-muted);">
+            <span style="font-weight: 500;">FLAT PKR 150 NATIONWIDE DELIVERY</span>
+            <span style="color: var(--success-color); font-weight: 700; display: flex; align-items: center; gap: 0.25rem;">
+              <span class="status-dot status-dot-green" style="width: 6px; height: 6px;"></span>
+              IN STOCK • READY FOR DISPATCH
+            </span>
+          </div>
+        </div>
+
+        <!-- Form for Variant Selection & Cart Submission -->
+        {% form 'product', product, id: 'pdpForm', class: 'pdp-product-form' %}
+          <input type="hidden" name="id" id="selectedVariantId" value="{{ current_variant.id }}">
+
+          <!-- Variant Selector: Laptop Stand Silver & Black -->
+          {% if is_laptop_stand and product.variants.size > 1 %}
+            <div style="padding: 1.25rem; border: 1px solid var(--border-main); background: var(--bg-surface-elevated); border-radius: var(--radius-xs); margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                <span style="font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600;">
+                  SELECT FINISH:
+                </span>
+                <span id="pdpSelectedFinishText" style="font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; color: var(--text-primary); font-weight: 700;">
+                  {{ current_variant.title }}
+                </span>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                {% for variant in product.variants %}
+                  {% assign is_selected = false %}
+                  {% if variant.id == current_variant.id %}{% assign is_selected = true %}{% endif %}
+                  {% assign is_silver = false %}
+                  {% if variant.title contains 'Silver' or variant.title contains 'silver' %}{% assign is_silver = true %}{% endif %}
+
+                  <button
+                    type="button"
+                    class="pdp-finish-btn"
+                    data-variant-id="{{ variant.id }}"
+                    data-variant-title="{{ variant.title }}"
+                    data-variant-price="{{ variant.price | money_without_trailing_zeros }}"
+                    data-variant-compare="{{ variant.compare_at_price | money_without_trailing_zeros }}"
+                    data-variant-image="{% if variant.featured_image %}{{ variant.featured_image | image_url: width: 900 }}{% elsif is_silver %}{{ 'laptop-stand-silver.png' | asset_url }}{% else %}{{ 'laptop-stand-black.png' | asset_url }}{% endif %}"
+                    style="padding: 0.75rem; border: 1px solid {% if is_selected %}var(--accent-blue){% else %}var(--border-main){% endif %}; background: var(--bg-surface); border-radius: var(--radius-xs); display: flex; align-items: center; gap: 0.75rem; cursor: pointer; text-align: left;"
+                    onclick="selectPdpVariant(this)"
+                  >
+                    <span style="width: 1rem; height: 1rem; border-radius: 9999px; border: 1px solid #71717A; background-color: {% if is_silver %}#D4D4D8{% else %}#18181B{% endif %}; flex-shrink: 0;"></span>
+                    <div>
+                      <div style="font-family: var(--font-display); font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--text-primary);">
+                        {{ variant.title }}
+                      </div>
+                      <div style="font-family: var(--font-tech); font-size: 0.625rem; color: var(--text-dim); text-transform: uppercase;">
+                        IN STOCK
+                      </div>
+                    </div>
+                  </button>
+                {% endfor %}
+              </div>
+            </div>
+          {% elsif is_ring %}
+            <!-- Ring Size Selector (Sizes: 6, 7, 9, 10, 11, 12, 17, 20, 21) -->
+            <div style="padding: 1.25rem; border: 1px solid var(--border-main); background: var(--bg-surface); border-radius: var(--radius-xs); margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                <span style="font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600;">
+                  SELECT RING SIZE (US / STANDARD):
+                </span>
+                <span id="pdpSelectedRingSizeText" style="font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; color: var(--accent-blue); font-weight: 700;">
+                  PLEASE SELECT
+                </span>
+              </div>
+
+              <!-- Hidden property passed to cart line items -->
+              <input type="hidden" name="properties[Ring Size]" id="ringSizeProperty" value="">
+
+              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="ringSizePills">
+                {% assign ring_sizes = "6,7,9,10,11,12,17,20,21" | split: "," %}
+                {% for rsize in ring_sizes %}
+                  <button
+                    type="button"
+                    class="btn-tech ring-size-btn"
+                    data-size="{{ rsize }}"
+                    style="min-width: 2.75rem; padding: 0.5rem; text-align: center;"
+                    onclick="selectRingSize('{{ rsize }}', this)"
+                  >
+                    {{ rsize }}
+                  </button>
+                {% endfor %}
+              </div>
+              <div id="ringSizeError" style="display: none; color: #DC2626; font-family: var(--font-tech); font-size: 0.6875rem; margin-top: 0.5rem;">
+                Please select a ring size before adding to cart.
+              </div>
+            </div>
+          {% elsif product.variants.size > 1 %}
+            <!-- Generic Variant Options Selector -->
+            <div style="padding: 1.25rem; border: 1px solid var(--border-main); background: var(--bg-surface); border-radius: var(--radius-xs); margin-bottom: 1.25rem;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+                <span style="font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600;">
+                  SELECT OPTION:
+                </span>
+                <span style="font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; color: var(--text-primary); font-weight: 700;">
+                  {{ current_variant.title }}
+                </span>
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                {% for variant in product.variants %}
+                  <button
+                    type="button"
+                    class="btn-tech"
+                    data-variant-id="{{ variant.id }}"
+                    style="{% if variant.id == current_variant.id %}border-color: var(--accent-blue); color: var(--accent-blue); font-weight: 700; background: var(--accent-blue-subtle);{% endif %}"
+                    onclick="selectPdpVariant(this)"
+                  >
+                    {{ variant.title }}
+                  </button>
+                {% endfor %}
+              </div>
+            </div>
+          {% endif %}
+
+          <!-- Key Ergonomic Benefits for Laptop Stand -->
+          {% if is_laptop_stand %}
+            <div style="padding: 1.25rem; border: 1px solid var(--border-main); background: var(--bg-surface); border-radius: var(--radius-xs); margin-bottom: 1.25rem;">
+              <div style="font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 0.75rem;">
+                KEY ERGONOMIC & FUNCTIONAL BENEFITS
+              </div>
+              <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.625rem; font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-muted);">
+                <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                  <span style="color: var(--accent-blue); font-weight: 700;">✓</span>
+                  <span><strong style="color: var(--text-primary);">Eye-Level Ergonomics:</strong> Multi-level angle adjustment raises screen to natural eye level to reduce neck and back fatigue.</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                  <span style="color: var(--accent-blue); font-weight: 700;">✓</span>
+                  <span><strong style="color: var(--text-primary);">Passive Cooling Airflow:</strong> Hollow open-rail architecture prevents heat buildup under your laptop chassis.</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                  <span style="color: var(--accent-blue); font-weight: 700;">✓</span>
+                  <span><strong style="color: var(--text-primary);">Anti-Slip Stability:</strong> High-friction silicone pads protect surfaces and keep devices firmly in place.</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                  <span style="color: var(--accent-blue); font-weight: 700;">✓</span>
+                  <span><strong style="color: var(--text-primary);">Fold-Flat Portability:</strong> Collapses completely flat in seconds; protective travel sleeve included.</span>
+                </li>
+              </ul>
+            </div>
+          {% endif %}
+
+          <!-- Quantity Stepper & Actions -->
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+              <!-- Quantity Stepper -->
+              <div style="display: flex; align-items: center; border: 1px solid var(--border-main); background: var(--bg-surface); border-radius: var(--radius-xs);">
+                <button
+                  type="button"
+                  style="width: 2.5rem; height: 2.75rem; display: flex; align-items: center; justify-content: center; font-family: var(--font-tech); font-size: 1rem; color: var(--text-muted);"
+                  onclick="changePdpQty(-1)"
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  name="quantity"
+                  id="pdpQuantity"
+                  value="1"
+                  min="1"
+                  style="width: 2.5rem; text-align: center; border: none; background: transparent; font-family: var(--font-tech); font-weight: 700; font-size: 0.875rem; color: var(--text-primary); outline: none;"
+                >
+                <button
+                  type="button"
+                  style="width: 2.5rem; height: 2.75rem; display: flex; align-items: center; justify-content: center; font-family: var(--font-tech); font-size: 1rem; color: var(--text-muted);"
+                  onclick="changePdpQty(1)"
+                >
+                  +
+                </button>
+              </div>
+
+              <!-- Add to Cart Button -->
+              <button
+                type="submit"
+                class="btn-secondary"
+                style="flex: 1; height: 2.75rem; padding: 0 1rem; font-size: 0.75rem;"
+              >
+                ADD TO CART
+              </button>
+            </div>
+
+            <!-- Buy Now with COD (Primary Button) -->
+            <button
+              type="button"
+              class="btn-primary"
+              style="width: 100%; height: 3.25rem; font-size: 0.8125rem;"
+              onclick="buyNowWithCOD()"
+            >
+              <span>⚡</span>
+              <span>BUY NOW WITH CASH ON DELIVERY</span>
+            </button>
+
+            <!-- Contextual WhatsApp Assistance Action -->
+            <a
+              href="https://wa.me/923194389617?text={{ 'Hello DEXYFIED, I would like to order or ask a question regarding the ' | append: product.title | append: ' (' | append: current_variant.price | money_without_trailing_zeros | append: '). Could you please guide me?' | url_encode }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-tech"
+              style="width: 100%; height: 2.75rem; color: #25D366; border-color: var(--border-main); display: flex; align-items: center; justify-content: center; gap: 0.5rem;"
+            >
+              <span style="font-weight: 700;">WHATSAPP:</span>
+              <span>QUESTIONS? CHAT WITH US ON WHATSAPP</span>
+            </a>
+          </div>
+        {% endform %}
+
+        <!-- Transparent Order, Payment & Logistics Reassurance Box -->
+        <div style="padding: 1.25rem; border: 1px solid var(--border-main); background: var(--bg-surface-elevated); border-radius: var(--radius-xs); display: flex; flex-direction: column; gap: 0.875rem;">
+          <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+              <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path>
+              <path d="M15 18H9"></path>
+              <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path>
+              <circle cx="17" cy="18" r="2"></circle>
+              <circle cx="7" cy="18" r="2"></circle>
+            </svg>
+            <div>
+              <span style="font-family: var(--font-tech); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; color: var(--text-primary); display: block;">
+                Nationwide Delivery — Flat PKR 150
+              </span>
+              <span style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">
+                Dispatched across Pakistan via tracked registered courier.
+              </span>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#25D366" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <div>
+              <span style="font-family: var(--font-tech); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; color: var(--text-primary); display: block;">
+                Cash on Delivery Confirmed via WhatsApp
+              </span>
+              <span style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">
+                Place your order and confirm your details directly on WhatsApp prior to shipment.
+              </span>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+            <div>
+              <span style="font-family: var(--font-tech); font-weight: 700; font-size: 0.75rem; text-transform: uppercase; color: var(--text-primary); display: block;">
+                Prepaid Options & 7-Day Return Policy
+              </span>
+              <span style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">
+                Meezan Bank, JazzCash, and Easypaisa available at checkout. Backed by our 7-day return policy.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Overview Detailed Description -->
+        <div style="padding-top: 1rem; border-top: 1px solid var(--border-main);">
+          <h3 style="font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 700; margin-bottom: 0.5rem;">
+            PRODUCT OVERVIEW
+          </h3>
+          <div style="font-family: var(--font-sans); font-size: 0.8125rem; color: var(--text-primary); line-height: 1.6;">
+            {{ product.description }}
+          </div>
+        </div>
+
+        <!-- Technical Specifications Table Snippet -->
+        <div style="padding-top: 1.5rem; border-top: 1px solid var(--border-main);">
+          {% render 'tech-specs-table', title: 'TECHNICAL SPECIFICATIONS' %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile / Tablet Sticky Purchase Bar -->
+  <div class="mobile-sticky-buy-bar">
+    <div style="display: flex; flex-direction: column;">
+      <div style="font-family: var(--font-tech); font-size: 0.625rem; color: var(--text-dim); text-transform: uppercase; font-weight: 500;">
+        {% if is_ring %}
+          <span id="mobileStickyRingText">SELECT SIZE</span>
+        {% elsif is_laptop_stand %}
+          <span id="mobileStickyFinishText">COLOR: SILVER</span>
+        {% else %}
+          IN STOCK
+        {% endif %}
+      </div>
+      <div style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--text-primary);" id="mobileStickyPrice">
+        {{ current_variant.price | money_without_trailing_zeros }}
+      </div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <button
+        type="button"
+        class="btn-tech"
+        style="padding: 0.625rem 0.875rem;"
+        onclick="document.getElementById('pdpForm').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }))"
+      >
+        + BAG
+      </button>
+      <button
+        type="button"
+        class="btn-primary"
+        style="padding: 0.625rem 1.25rem;"
+        onclick="buyNowWithCOD()"
+      >
+        BUY NOW
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function changePdpQty(delta) {
+    const input = document.getElementById('pdpQuantity');
+    let val = parseInt(input.value) || 1;
+    val = Math.max(1, val + delta);
+    input.value = val;
+  }
+
+  function selectPdpVariant(button) {
+    const variantId = button.getAttribute('data-variant-id');
+    const title = button.getAttribute('data-variant-title');
+    const price = button.getAttribute('data-variant-price');
+    const compare = button.getAttribute('data-variant-compare');
+    const image = button.getAttribute('data-variant-image');
+
+    document.getElementById('selectedVariantId').value = variantId;
+
+    if (title && document.getElementById('pdpSelectedFinishText')) {
+      document.getElementById('pdpSelectedFinishText').textContent = title;
+    }
+    if (title && document.getElementById('mobileStickyFinishText')) {
+      document.getElementById('mobileStickyFinishText').textContent = 'COLOR: ' + title.toUpperCase();
+    }
+    if (price && document.getElementById('pdpPrice')) {
+      document.getElementById('pdpPrice').textContent = price;
+    }
+    if (price && document.getElementById('mobileStickyPrice')) {
+      document.getElementById('mobileStickyPrice').textContent = price;
+    }
+    if (image && document.getElementById('pdpMainImage')) {
+      document.getElementById('pdpMainImage').src = image;
+    }
+
+    // Toggle active state on buttons
+    document.querySelectorAll('.pdp-finish-btn').forEach(btn => {
+      btn.style.borderColor = 'var(--border-main)';
+    });
+    button.style.borderColor = 'var(--accent-blue)';
+  }
+
+  function selectRingSize(size, button) {
+    document.getElementById('ringSizeProperty').value = size;
+    document.getElementById('pdpSelectedRingSizeText').textContent = 'SIZE ' + size;
+    if (document.getElementById('mobileStickyRingText')) {
+      document.getElementById('mobileStickyRingText').textContent = 'SIZE: ' + size;
+    }
+    document.getElementById('ringSizeError').style.display = 'none';
+
+    document.querySelectorAll('.ring-size-btn').forEach(btn => {
+      btn.style.borderColor = 'var(--border-main)';
+      btn.style.color = 'var(--text-primary)';
+      btn.style.background = 'var(--bg-surface-elevated)';
+    });
+    button.style.borderColor = 'var(--accent-blue)';
+    button.style.color = 'var(--accent-blue)';
+    button.style.background = 'var(--accent-blue-subtle)';
+  }
+
+  function buyNowWithCOD() {
+    {% if is_ring %}
+      const ringSize = document.getElementById('ringSizeProperty').value;
+      if (!ringSize) {
+        document.getElementById('ringSizeError').style.display = 'block';
+        window.scrollTo({ top: document.getElementById('ringSizePills').offsetTop - 120, behavior: 'smooth' });
+        return;
+      }
+    {% endif %}
+
+    const variantId = document.getElementById('selectedVariantId').value;
+    const qty = parseInt(document.getElementById('pdpQuantity').value) || 1;
+    const properties = {};
+    {% if is_ring %}
+      properties['Ring Size'] = document.getElementById('ringSizeProperty').value;
+    {% endif %}
+
+    // Add to cart and immediately redirect to checkout
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ id: variantId, quantity: qty, properties: properties })
+    }).then(() => {
+      window.location.href = '/checkout';
+    }).catch(err => {
+      console.error(err);
+      window.location.href = '/checkout';
+    });
+  }
+</script>
+
+<style>
+  @media (min-width: 900px) {
+    .pdp-grid {
+      grid-template-columns: 6fr 6fr !important;
+      gap: 3.5rem !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Main Product",
+  "settings": []
+}
+{% endschema %}

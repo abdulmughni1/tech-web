@@ -1,0 +1,43 @@
+{%- if section.settings.show_announcement -%}
+  <div class="announcement-bar">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+      <span style="font-weight: 600; color: var(--text-primary);">{{ section.settings.text_1 | default: 'NATIONWIDE DELIVERY PKR 150' }}</span>
+      <span style="color: var(--border-bright);">•</span>
+      <span>{{ section.settings.text_2 | default: '7-DAY RETURN POLICY' }}</span>
+      <span style="color: var(--border-bright);">•</span>
+      <span>SUPPORT: {{ section.settings.support_phone | default: '+92 319 4389617' }}</span>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show announcement banner",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text_1",
+      "label": "Primary announcement",
+      "default": "NATIONWIDE DELIVERY PKR 150"
+    },
+    {
+      "type": "text",
+      "id": "text_2",
+      "label": "Secondary note",
+      "default": "7-DAY RETURN POLICY"
+    },
+    {
+      "type": "text",
+      "id": "support_phone",
+      "label": "Support contact",
+      "default": "+92 319 4389617"
+    }
+  ]
+}
+{% endschema %}

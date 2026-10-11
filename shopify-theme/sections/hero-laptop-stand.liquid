@@ -1,0 +1,277 @@
+{% comment %}
+  DEXYFIED Laptop Stand Editorial Campaign Hero
+  Focuses on Item DX-01 with live Silver & Black finish switching, metrics row, and quick order action
+{% endcomment %}
+
+{%- liquid
+  assign featured_product = section.settings.product
+  if featured_product == blank
+    assign featured_product = all_products['adjustable-portable-laptop-stand']
+  endif
+
+  assign silver_variant = featured_product.variants[0]
+  assign black_variant = featured_product.variants[1]
+
+  assign silver_img = 'laptop-stand-silver.png' | asset_url
+  assign black_img = 'laptop-stand-black.png' | asset_url
+
+  if featured_product.images.size > 0
+    assign silver_img = featured_product.images[0] | image_url: width: 800
+  endif
+  if featured_product.images.size > 1
+    assign black_img = featured_product.images[1] | image_url: width: 800
+  endif
+-%}
+
+<section style="position: relative; border-bottom: 1px solid var(--border-main); padding-top: 2.5rem; padding-bottom: 3.5rem; background-color: var(--bg-surface); overflow: hidden;">
+  <div class="dexy-container">
+    <div style="display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center;" class="hero-grid">
+      <!-- Left Column: Editorial Copy -->
+      <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <!-- Eyebrow -->
+        <div>
+          <div class="tech-badge">
+            <span class="status-dot"></span>
+            <span style="font-weight: 700; color: var(--text-primary);">FEATURED HARDWARE</span>
+          </div>
+        </div>
+
+        <!-- Headline -->
+        <h1 style="font-family: var(--font-display); font-weight: 700; font-size: 2.5rem; line-height: 1.05; text-transform: uppercase; letter-spacing: -0.02em; color: var(--text-primary); margin: 0;" class="hero-title">
+          {{ section.settings.headline | default: 'A Better Setup Starts Here.' }}
+        </h1>
+
+        <!-- Supporting text -->
+        <p style="font-family: var(--font-sans); font-size: 1rem; color: var(--text-muted); line-height: 1.6; max-width: 34rem; margin: 0;">
+          {{ section.settings.subheading | default: 'Give your workspace a cleaner, more comfortable setup with our adjustable portable laptop stand.' }}
+        </p>
+
+        <!-- Metrics Row -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; padding: 0.875rem 0; border-top: 1px solid var(--border-main); border-bottom: 1px solid var(--border-main); max-width: 32rem; font-family: var(--font-tech);">
+          <div>
+            <div style="font-weight: 700; font-size: 1.125rem; color: var(--text-primary);">PKR 150</div>
+            <div style="font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; font-weight: 500;">NATIONWIDE SHIPPING</div>
+          </div>
+          <div>
+            <div style="font-weight: 700; font-size: 1.125rem; color: var(--text-primary);">7 DAYS</div>
+            <div style="font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; font-weight: 500;">RETURN POLICY</div>
+          </div>
+          <div>
+            <div style="font-weight: 700; font-size: 1.125rem; color: var(--text-primary);">COD</div>
+            <div style="font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; font-weight: 500;">CASH ON ARRIVAL</div>
+          </div>
+        </div>
+
+        <!-- CTAs -->
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; padding-top: 0.5rem;">
+          <a
+            href="{% if featured_product != blank %}{{ featured_product.url }}{% else %}/products/adjustable-portable-laptop-stand{% endif %}"
+            class="btn-primary"
+          >
+            <span>SHOP LAPTOP STAND</span>
+            <span>→</span>
+          </a>
+          <a
+            href="{{ routes.all_products_collection_url }}"
+            class="btn-secondary"
+          >
+            EXPLORE THE COLLECTION
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Featured Physical Product Showcase -->
+      <div>
+        <div style="border: 1px solid var(--border-main); background: var(--bg-surface-subtle); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; border-radius: var(--radius-xs); box-shadow: var(--shadow-sm);">
+          <!-- Top Badges -->
+          <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-main);">
+            <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">
+              ITEM DX-01 // WORKSPACE
+            </span>
+            <span class="tech-badge-blue" style="font-size: 0.6875rem; padding: 0.125rem 0.5rem;">
+              SAVE PKR 1,500 (50% OFF)
+            </span>
+          </div>
+
+          <!-- Product Image Frame -->
+          <div
+            id="heroStandFrame"
+            style="margin: 1.25rem 0; aspect-ratio: 4 / 3; background: var(--bg-surface); border: 1px solid var(--border-main); padding: 1.5rem; border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden;"
+            onclick="window.location.href='{% if featured_product != blank %}{{ featured_product.url }}{% else %}/products/adjustable-portable-laptop-stand{% endif %}'"
+          >
+            <img
+              id="heroStandImage"
+              src="{{ silver_img }}"
+              alt="Adjustable Portable Laptop Stand in Silver finish"
+              style="max-height: 100%; max-width: 100%; object-fit: contain; transition: transform 0.3s ease;"
+            >
+          </div>
+
+          <!-- Interactive Finish Selector (Silver & Black) -->
+          <div style="padding: 0.75rem 0; border-top: 1px solid var(--border-main); display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">
+              FINISH: <strong id="heroStandFinishName" style="color: var(--text-primary);">SILVER</strong>
+            </span>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <button
+                type="button"
+                id="heroBtnSilver"
+                class="btn-tech"
+                style="padding: 0.25rem 0.625rem; font-size: 0.6875rem; border-color: var(--accent-blue); color: var(--accent-blue); font-weight: 700; background: var(--accent-blue-subtle);"
+                onclick="setHeroVariant('Silver', '{{ silver_img }}', '{{ silver_variant.id }}')"
+              >
+                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 9999px; background: #D4D4D8; border: 1px solid #A1A1AA; margin-right: 4px;"></span>
+                SILVER
+              </button>
+              <button
+                type="button"
+                id="heroBtnBlack"
+                class="btn-tech"
+                style="padding: 0.25rem 0.625rem; font-size: 0.6875rem;"
+                onclick="setHeroVariant('Black', '{{ black_img }}', '{{ black_variant.id }}')"
+              >
+                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 9999px; background: #18181B; border: 1px solid #71717A; margin-right: 4px;"></span>
+                BLACK
+              </button>
+            </div>
+          </div>
+
+          <!-- Main Benefits from Verified Data -->
+          <div style="padding: 0.625rem 0; border-top: 1px solid var(--border-main); display: grid; grid-template-columns: 1fr 1fr; gap: 0.375rem; font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-muted);">
+            <span style="display: flex; align-items: center; gap: 0.375rem;">
+              <span class="status-dot" style="width: 5px; height: 5px;"></span>
+              Multi-Level Angle Riser
+            </span>
+            <span style="display: flex; align-items: center; gap: 0.375rem;">
+              <span class="status-dot" style="width: 5px; height: 5px;"></span>
+              Passive Airflow Cooling
+            </span>
+            <span style="display: flex; align-items: center; gap: 0.375rem;">
+              <span class="status-dot" style="width: 5px; height: 5px;"></span>
+              Silicone Non-Slip Grip
+            </span>
+            <span style="display: flex; align-items: center; gap: 0.375rem;">
+              <span class="status-dot" style="width: 5px; height: 5px;"></span>
+              Sleeve Included
+            </span>
+          </div>
+
+          <!-- Price & Buy Actions -->
+          <div style="padding-top: 0.75rem; border-top: 1px solid var(--border-main); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;">
+            <div>
+              <h3 style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--text-primary); margin: 0;">
+                Adjustable Portable Laptop Stand
+              </h3>
+              <div style="display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-tech); font-size: 0.75rem; margin-top: 2px;">
+                <span style="color: var(--text-dim); text-decoration: line-through;">PKR 3,000</span>
+                <span style="color: var(--text-primary); font-weight: 700; font-size: 0.875rem;">PKR 1,500</span>
+                <span style="color: var(--text-muted);">• DUAL FINISH</span>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <a
+                href="{% if featured_product != blank %}{{ featured_product.url }}{% else %}/products/adjustable-portable-laptop-stand{% endif %}"
+                class="btn-tech"
+              >
+                DETAILS
+              </a>
+              <button
+                type="button"
+                id="heroOrderBtn"
+                class="btn-primary"
+                style="padding: 0.625rem 1rem;"
+                onclick="orderHeroStand()"
+              >
+                ORDER NOW
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  let currentHeroVariantId = '{{ silver_variant.id }}';
+
+  function setHeroVariant(name, imgSrc, variantId) {
+    document.getElementById('heroStandFinishName').textContent = name.toUpperCase();
+    document.getElementById('heroStandImage').src = imgSrc;
+    currentHeroVariantId = variantId;
+
+    const btnSilver = document.getElementById('heroBtnSilver');
+    const btnBlack = document.getElementById('heroBtnBlack');
+
+    if (name === 'Silver') {
+      btnSilver.style.borderColor = 'var(--accent-blue)';
+      btnSilver.style.color = 'var(--accent-blue)';
+      btnSilver.style.fontWeight = '700';
+      btnSilver.style.background = 'var(--accent-blue-subtle)';
+      btnBlack.style.borderColor = 'var(--border-main)';
+      btnBlack.style.color = 'var(--text-primary)';
+      btnBlack.style.fontWeight = '500';
+      btnBlack.style.background = 'var(--bg-surface-elevated)';
+    } else {
+      btnBlack.style.borderColor = 'var(--accent-blue)';
+      btnBlack.style.color = 'var(--accent-blue)';
+      btnBlack.style.fontWeight = '700';
+      btnBlack.style.background = 'var(--accent-blue-subtle)';
+      btnSilver.style.borderColor = 'var(--border-main)';
+      btnSilver.style.color = 'var(--text-primary)';
+      btnSilver.style.fontWeight = '500';
+      btnSilver.style.background = 'var(--bg-surface-elevated)';
+    }
+  }
+
+  function orderHeroStand() {
+    if (currentHeroVariantId && currentHeroVariantId.trim() !== '' && window.DexyfiedCart) {
+      window.DexyfiedCart.addToCart(currentHeroVariantId, 1);
+    } else {
+      window.location.href = '{% if featured_product != blank %}{{ featured_product.url }}{% else %}/products/adjustable-portable-laptop-stand{% endif %}';
+    }
+  }
+</script>
+
+<style>
+  @media (min-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 7fr 6fr !important;
+      gap: 3rem !important;
+    }
+    .hero-title {
+      font-size: 3.5rem !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero Laptop Stand",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Featured Laptop Stand Product"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Campaign Headline",
+      "default": "A Better Setup Starts Here."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Campaign Description",
+      "default": "Give your workspace a cleaner, more comfortable setup with our adjustable portable laptop stand."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Laptop Stand Campaign"
+    }
+  ]
+}
+{% endschema %}

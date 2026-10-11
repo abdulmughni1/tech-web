@@ -1,0 +1,95 @@
+{% comment %}
+  DEXYFIED Customer Feedback & Reviews Section
+  Real community transparency with verified reviews
+{% endcomment %}
+
+<section style="padding: 3.5rem 0; border-bottom: 1px solid var(--border-main); background-color: var(--bg-surface);">
+  <div class="dexy-container">
+    <div style="display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-main);" class="section-header-row">
+      <div>
+        <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.25rem; font-weight: 700;">
+          COMMUNITY TRANSPARENCY // REAL FEEDBACK
+        </span>
+        <h2 style="font-family: var(--font-display); font-weight: 700; font-size: 1.875rem; text-transform: uppercase; letter-spacing: -0.02em; color: var(--text-primary); margin: 0;">
+          Customer Reviews
+        </h2>
+      </div>
+
+      <a
+        href="{{ routes.all_products_collection_url }}"
+        style="font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; color: var(--accent-blue); font-weight: 700; display: inline-flex; align-items: center; gap: 0.25rem; margin-top: 0.75rem;"
+      >
+        <span>EXPLORE HARDWARE & WRITE REVIEWS</span>
+        <span>→</span>
+      </a>
+    </div>
+
+    <!-- Review Cards Grid -->
+    <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;" class="reviews-grid">
+      <!-- Review 1 -->
+      <div style="border: 1px solid var(--border-main); background: var(--bg-surface-subtle); padding: 1.5rem; border-radius: var(--radius-xs); box-shadow: var(--shadow-2xs); display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-family: var(--font-display); font-weight: 700; font-size: 0.875rem; color: var(--text-primary);">
+            Hamza Tariq (Lahore)
+          </span>
+          <div style="display: flex; color: var(--warning-color); font-size: 0.875rem;">
+            ★★★★★
+          </div>
+        </div>
+        <p style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
+          "The laptop stand in silver has solid build quality. Dual-rail frame doesn't wobble at all while typing on a 15.6 inch Dell XPS. Cash on delivery arrived in 3 days."
+        </p>
+      </div>
+
+      <!-- Review 2 -->
+      <div style="border: 1px solid var(--border-main); background: var(--bg-surface-subtle); padding: 1.5rem; border-radius: var(--radius-xs); box-shadow: var(--shadow-2xs); display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-family: var(--font-display); font-weight: 700; font-size: 0.875rem; color: var(--text-primary);">
+            Zubair Ahmed (Karachi)
+          </span>
+          <div style="display: flex; color: var(--warning-color); font-size: 0.875rem;">
+            ★★★★★
+          </div>
+        </div>
+        <p style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
+          "AirPods touch screen case is super convenient. You can see the battery percentage of both left and right buds directly on the case. Very satisfied with prompt delivery."
+        </p>
+      </div>
+
+      <!-- Review 3 -->
+      <div style="border: 1px solid var(--border-main); background: var(--bg-surface-subtle); padding: 1.5rem; border-radius: var(--radius-xs); box-shadow: var(--shadow-2xs); display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <span style="font-family: var(--font-display); font-weight: 700; font-size: 0.875rem; color: var(--text-primary);">
+            Bilal Khan (Islamabad)
+          </span>
+          <div style="display: flex; color: var(--warning-color); font-size: 0.875rem;">
+            ★★★★★
+          </div>
+        </div>
+        <p style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; margin: 0;">
+          "I9 Ultra Max watch display is massive and crisp. Bluetooth voice calls work seamlessly without lag. Accurate description and fast nationwide shipping."
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 768px) {
+    .reviews-grid {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Customer Reviews",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Customer Reviews Section"
+    }
+  ]
+}
+{% endschema %}

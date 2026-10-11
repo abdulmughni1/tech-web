@@ -1,0 +1,28 @@
+{
+  "general": {
+    "skip_to_content": "Skip to content",
+    "search": "Search",
+    "close": "Close",
+    "share": "Share",
+    "cart": "Cart"
+  },
+  "sections": {
+    "cart": {
+      "title": "Shopping Bag",
+      "empty": "Your cart is empty",
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "total": "Total Due",
+      "checkout": "Proceed to Checkout"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Cart",
+      "buy_now": "Buy Now with Cash on Delivery",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "save": "Save"
+    }
+  }
+}

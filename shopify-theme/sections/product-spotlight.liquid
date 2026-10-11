@@ -1,0 +1,139 @@
+{% comment %}
+  DEXYFIED Full-Width Hardware Spotlight Section (I9 Ultra Max Smart Watch)
+  Studio product photography paired with verified hardware specifications
+{% endcomment %}
+
+{%- liquid
+  assign spotlight_product = section.settings.product | default: all_products['i9-ultra-max-smart-watch']
+  assign watch_img = 'i9-ultra-max.png' | asset_url
+  if spotlight_product.featured_media
+    assign watch_img = spotlight_product.featured_media | image_url: width: 800
+  endif
+-%}
+
+<section style="padding: 3.5rem 0; border-bottom: 1px solid var(--border-main); background-color: var(--bg-surface-elevated);">
+  <div class="dexy-container">
+    <div style="border: 1px solid var(--border-main); background: var(--bg-surface); padding: 1.5rem; border-radius: var(--radius-xs); box-shadow: var(--shadow-sm);" class="spotlight-card">
+      <div style="display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center;" class="spotlight-grid">
+        <!-- Left: Studio Photo -->
+        <div
+          style="aspect-ratio: 1 / 1; background: var(--bg-surface-subtle); border: 1px solid var(--border-main); padding: 1.5rem; border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden;"
+          onclick="window.location.href='{% if spotlight_product != blank %}{{ spotlight_product.url }}{% else %}/products/i9-ultra-max-smart-watch{% endif %}'"
+        >
+          <img
+            src="{{ watch_img }}"
+            alt="I9 Ultra Max Smart Watch in Black Zinc Alloy"
+            style="max-height: 100%; max-width: 100%; object-fit: contain; transition: transform 0.3s ease;"
+          >
+        </div>
+
+        <!-- Right: Hardware Specifications -->
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 0.5rem;">
+              <span class="status-dot"></span>
+              <span>HARDWARE SPOTLIGHT // ITEM 06</span>
+            </div>
+            <h2 style="font-family: var(--font-display); font-weight: 700; font-size: 2rem; text-transform: uppercase; color: var(--text-primary); margin: 0; line-height: 1.1;">
+              {{ spotlight_product.title | default: 'I9 Ultra Max Smart Watch' }}
+            </h2>
+            <p style="font-family: var(--font-sans); font-size: 0.8125rem; color: var(--text-muted); line-height: 1.6; margin-top: 0.5rem;">
+              An expansive 2.19-inch IPS display smartwatch powered by the JL7011 processor. Encased in a zinc-alloy front shell with black ABS+PC backing, it supports Bluetooth 5.3 calling and IP67 water resistance.
+            </p>
+          </div>
+
+          <!-- Specifications Table -->
+          <div style="padding-top: 0.75rem; border-top: 1px solid var(--border-main);">
+            <div class="specs-table">
+              <div class="specs-row">
+                <div class="specs-label">WATCH HEAD DIMENSIONS</div>
+                <div class="specs-value">48.1 × 44.6 × 14 mm</div>
+              </div>
+              <div class="specs-row">
+                <div class="specs-label">DISPLAY & RESOLUTION</div>
+                <div class="specs-value">2.19-inch IPS Full-Touch (240 × 296)</div>
+              </div>
+              <div class="specs-row">
+                <div class="specs-label">CHASSIS & STRAP</div>
+                <div class="specs-value">Zinc Alloy Front Shell / Black Silicone Strap</div>
+              </div>
+              <div class="specs-row">
+                <div class="specs-label">BLUETOOTH & CALLING</div>
+                <div class="specs-value">Bluetooth 5.3 Voice Calling & Phonebook</div>
+              </div>
+              <div class="specs-row">
+                <div class="specs-label">WATER RESISTANCE</div>
+                <div class="specs-value">IP67 Certified Ingress Protection</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 0.75rem; padding: 0.75rem; border: 1px solid var(--border-main); background: var(--bg-surface-elevated); font-family: var(--font-sans); font-size: 0.6875rem; color: var(--text-muted); line-height: 1.5; border-radius: var(--radius-xs);">
+              <strong style="color: var(--accent-blue); font-family: var(--font-tech); text-transform: uppercase;">[NOTICE]:</strong>
+              Health-related functions are designed strictly for general fitness and activity tracking purposes, and are not medical devices or intended for clinical diagnosis.
+            </div>
+          </div>
+
+          <!-- Pricing & Action Row -->
+          <div style="padding-top: 1rem; border-top: 1px solid var(--border-main); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <span style="font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-dim); text-decoration: line-through; text-transform: uppercase; display: block;">
+                PKR 3,300
+              </span>
+              <span style="font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; color: var(--text-primary);">
+                PKR 2,500
+              </span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <a
+                href="{% if spotlight_product != blank %}{{ spotlight_product.url }}{% else %}/products/i9-ultra-max-smart-watch{% endif %}"
+                class="btn-tech"
+                style="padding: 0.75rem 1.25rem;"
+              >
+                FULL SPECS
+              </a>
+              <button
+                type="button"
+                class="btn-primary"
+                style="padding: 0.75rem 1.5rem;"
+                onclick="DexyfiedCart.addToCart({% if spotlight_product != blank %}{{ spotlight_product.variants.first.id }}{% else %}null{% endif %}, 1)"
+              >
+                ORDER NOW
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 768px) {
+    .spotlight-card {
+      padding: 2.5rem !important;
+    }
+    .spotlight-grid {
+      grid-template-columns: 5fr 7fr !important;
+      gap: 3rem !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product Spotlight",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Spotlight Product"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hardware Product Spotlight"
+    }
+  ]
+}
+{% endschema %}

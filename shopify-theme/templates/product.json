@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {}
+    },
+    "trust": {
+      "type": "trust-bar",
+      "settings": {}
+    },
+    "standards": {
+      "type": "commercial-standards",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "trust",
+    "standards"
+  ]
+}

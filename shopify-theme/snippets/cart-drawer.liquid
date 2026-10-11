@@ -1,0 +1,140 @@
+{% comment %}
+  DEXYFIED Native Ajax Cart Drawer Snippet
+  Slide-out panel matching the exact React CartDrawer with transparent PKR 150 shipping breakdown and COD indicator
+{% endcomment %}
+
+<div class="cart-drawer-overlay" data-cart-overlay></div>
+
+<div class="cart-drawer" data-cart-drawer>
+  <!-- Header -->
+  <div class="cart-drawer-header">
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <span class="status-dot"></span>
+      <h2 style="font-family: var(--font-display); font-size: 1rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-primary); margin: 0;">
+        CART BAG [<span data-cart-count>{{ cart.item_count }}</span>]
+      </h2>
+    </div>
+    <button
+      type="button"
+      data-cart-close
+      style="padding: 0.375rem 0.5rem; border: 1px solid var(--border-main); color: var(--text-muted); border-radius: var(--radius-xs); line-height: 1; cursor: pointer;"
+      aria-label="Close cart"
+    >
+      ✕
+    </button>
+  </div>
+
+  <!-- Body -->
+  <div class="cart-drawer-body">
+    <!-- Empty State -->
+    <div data-cart-empty style="{% if cart.item_count > 0 %}display: none;{% else %}display: flex;{% endif %} flex-direction: column; align-items: center; justify-content: center; padding: 4rem 1rem; text-align: center;">
+      <div style="width: 3rem; height: 3rem; border: 1px solid var(--border-main); display: flex; align-items: center; justify-content: center; color: var(--text-dim); margin-bottom: 1rem; font-family: var(--font-tech); background: var(--bg-surface-elevated); border-radius: var(--radius-xs);">
+        [ 0 ]
+      </div>
+      <p style="font-family: var(--font-display); font-weight: 700; color: var(--text-primary); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; margin: 0;">
+        Your cart is empty
+      </p>
+      <p style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; max-width: 200px;">
+        Browse our catalog to select physical hardware products.
+      </p>
+      <button
+        type="button"
+        data-cart-close
+        class="btn-tech"
+        style="margin-top: 1.5rem; font-weight: 600;"
+      >
+        DISCOVER HARDWARE
+      </button>
+    </div>
+
+    <!-- Active Line Items Container -->
+    <div data-cart-drawer-items>
+      {% for item in cart.items %}
+        <div style="display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border-main);" data-line-key="{{ item.key }}">
+          <div style="width: 5rem; height: 5rem; background: var(--bg-surface-elevated); border: 1px solid var(--border-main); display: flex; align-items: center; justify-content: center; padding: 0.5rem; flex-shrink: 0; border-radius: var(--radius-xs);">
+            {% if item.image %}
+              <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+            {% endif %}
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;">
+                <h4 style="font-family: var(--font-display); font-size: 0.875rem; font-weight: 600; color: var(--text-primary); line-height: 1.25; margin: 0;">
+                  <a href="{{ item.url }}">{{ item.product.title }}</a>
+                </h4>
+                <button onclick="DexyfiedCart.updateItem('{{ item.key }}', 0)" style="color: var(--text-dim); padding: 2px;" title="Remove">✕</button>
+              </div>
+
+              {% if item.variant.title != blank and item.variant.title != 'Default Title' %}
+                <div style="font-family: var(--font-tech); font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 2px; color: var(--text-primary);">
+                  OPTION: {{ item.variant.title }}
+                </div>
+              {% endif %}
+
+              {% for property in item.properties %}
+                {% unless property.first.first == '_' %}
+                  <div style="font-family: var(--font-tech); font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 2px;">
+                    {{ property.first }}: {{ property.last }}
+                  </div>
+                {% endunless %}
+              {% endfor %}
+            </div>
+
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.75rem;">
+              <div style="display: flex; align-items: center; border: 1px solid var(--border-main); background: var(--bg-surface-elevated); border-radius: var(--radius-xs);">
+                <button onclick="DexyfiedCart.updateItem('{{ item.key }}', {{ item.quantity | minus: 1 }})" style="padding: 0.25rem 0.5rem; color: var(--text-muted); font-family: var(--font-tech); font-size: 0.75rem;">-</button>
+                <span style="font-family: var(--font-tech); font-size: 0.75rem; font-weight: bold; padding: 0 0.5rem;">{{ item.quantity }}</span>
+                <button onclick="DexyfiedCart.updateItem('{{ item.key }}', {{ item.quantity | plus: 1 }})" style="padding: 0.25rem 0.5rem; color: var(--text-muted); font-family: var(--font-tech); font-size: 0.75rem;">+</button>
+              </div>
+              <div style="font-family: var(--font-tech); font-size: 0.875rem; font-weight: bold; color: var(--text-primary);">
+                {{ item.final_line_price | money_without_trailing_zeros }}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Footer Breakdown -->
+  <div class="cart-drawer-footer" data-cart-drawer-footer style="{% if cart.item_count == 0 %}display: none;{% endif %}">
+    <div style="display: flex; flex-direction: column; gap: 0.625rem;">
+      <div style="display: flex; justify-content: space-between; font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-muted);">
+        <span>SUBTOTAL</span>
+        <span style="color: var(--text-primary); font-weight: 700;" data-cart-subtotal>{{ cart.total_price | money_without_trailing_zeros }}</span>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-muted);">
+        <span>SHIPPING (PAKISTAN)</span>
+        <span style="color: var(--text-primary); font-weight: 700;">PKR 150</span>
+      </div>
+
+      <div style="padding-top: 0.5rem; border-top: 1px solid var(--border-main); display: flex; justify-content: space-between; align-items: baseline;">
+        <div>
+          <span style="font-family: var(--font-display); font-weight: 700; font-size: 0.875rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-primary);">
+            TOTAL DUE
+          </span>
+          <p style="font-family: var(--font-tech); font-size: 0.625rem; color: var(--success-color); text-transform: uppercase; font-weight: 700; margin-top: 2px;">
+            ✓ CASH ON DELIVERY AVAILABLE
+          </p>
+        </div>
+        <span style="font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--text-primary);" data-cart-total>
+          {{ cart.total_price | plus: 15000 | money_without_trailing_zeros }}
+        </span>
+      </div>
+
+      <a
+        href="/checkout"
+        class="btn-primary"
+        style="width: 100%; margin-top: 0.5rem; padding: 1rem; text-align: center;"
+      >
+        <span>PROCEED TO CHECKOUT</span>
+        <span>→</span>
+      </a>
+
+      <div style="text-align: center; font-size: 0.625rem; font-family: var(--font-tech); color: var(--text-dim); text-transform: uppercase; padding-top: 0.25rem;">
+        7-DAY RETURN POLICY • FLAT PKR 150 NATIONWIDE
+      </div>
+    </div>
+  </div>
+</div>

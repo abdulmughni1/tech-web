@@ -1,0 +1,234 @@
+{% comment %}
+  DEXYFIED Engineered Essentials Editorial Product Section
+  Asymmetric layout: Large AirPods Case Spotlight + Wireless Headphones and Finger Ring Stack
+{% endcomment %}
+
+{%- liquid
+  assign p_airpods = section.settings.product_main | default: all_products['touch-screen-airpods-case']
+  assign p_headphones = section.settings.product_sub1 | default: all_products['wireless-over-ear-stereo-headphones']
+  assign p_ring = section.settings.product_sub2 | default: all_products['luminous-heartbeat-pattern-finger-ring']
+
+  assign airpods_img = 'airpods-case-black.png' | asset_url
+  if p_airpods.featured_media
+    assign airpods_img = p_airpods.featured_media | image_url: width: 800
+  endif
+
+  assign headphones_img = 'wireless-headphones.png' | asset_url
+  if p_headphones.featured_media
+    assign headphones_img = p_headphones.featured_media | image_url: width: 600
+  endif
+
+  assign ring_img = 'luminous-ring.png' | asset_url
+  if p_ring.featured_media
+    assign ring_img = p_ring.featured_media | image_url: width: 600
+  endif
+-%}
+
+<section style="padding: 3.5rem 0; border-bottom: 1px solid var(--border-main); background-color: var(--bg-main);">
+  <div class="dexy-container">
+    <!-- Header -->
+    <div style="display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-main);" class="section-header-row">
+      <div>
+        <span style="font-family: var(--font-tech); font-size: 0.75rem; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.25rem; font-weight: 700;">
+          CURATED LINEUP // 01
+        </span>
+        <h2 style="font-family: var(--font-display); font-weight: 700; font-size: 1.875rem; text-transform: uppercase; letter-spacing: -0.02em; color: var(--text-primary); margin: 0;">
+          Engineered Essentials
+        </h2>
+      </div>
+      <p style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-muted); max-width: 26rem; margin-top: 0.5rem; line-height: 1.6;">
+        Every item in our collection is physically verified for functional reliability before delivery.
+      </p>
+    </div>
+
+    <!-- Asymmetric Layout: Large Feature + Secondary Stack -->
+    <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; align-items: stretch;" class="essentials-grid">
+      <!-- MAIN FEATURE: Touch Screen AirPods Case -->
+      <div style="border: 1px solid var(--border-main); background: var(--bg-surface); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; border-radius: var(--radius-xs); box-shadow: var(--shadow-2xs);">
+        <div>
+          <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-main);">
+            <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">
+              ITEM 02 // AUDIO & INTERFACE
+            </span>
+            <span class="tech-badge-blue" style="font-size: 0.6875rem; padding: 0.125rem 0.5rem;">
+              SAVE PKR 1,800
+            </span>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <h3 style="font-family: var(--font-display); font-weight: 700; font-size: 1.375rem; color: var(--text-primary); margin: 0;">
+              <a href="{% if p_airpods != blank %}{{ p_airpods.url }}{% else %}/products/touch-screen-airpods-case{% endif %}" style="color: inherit;">
+                {{ p_airpods.title | default: 'Touch Screen AirPods Case' }}
+              </a>
+            </h3>
+            <p style="font-family: var(--font-sans); font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.375rem; line-height: 1.6;">
+              Wireless audio case featuring interactive front touch display, real-time left/right bud battery percentages, and onboard controls.
+            </p>
+          </div>
+        </div>
+
+        <!-- Dominant Image Frame -->
+        <div
+          style="margin: 1.75rem 0; aspect-ratio: 16 / 10; background: var(--bg-surface-subtle); border: 1px solid var(--border-main); display: flex; align-items: center; justify-content: center; padding: 1.25rem; border-radius: var(--radius-xs); cursor: pointer;"
+          onclick="window.location.href='{% if p_airpods != blank %}{{ p_airpods.url }}{% else %}/products/touch-screen-airpods-case{% endif %}'"
+        >
+          <img
+            src="{{ airpods_img }}"
+            alt="Touch Screen AirPods Case"
+            style="max-height: 85%; max-width: 85%; object-fit: contain; transition: transform 0.3s ease;"
+          >
+        </div>
+
+        <div style="padding-top: 1rem; border-top: 1px solid var(--border-main); display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <div style="font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-dim); text-decoration: line-through;">
+              PKR 5,000
+            </div>
+            <div style="font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--text-primary);">
+              PKR 3,200
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <a
+              href="{% if p_airpods != blank %}{{ p_airpods.url }}{% else %}/products/touch-screen-airpods-case{% endif %}"
+              class="btn-tech"
+            >
+              SPECS
+            </a>
+            <button
+              type="button"
+              class="btn-primary"
+              style="padding: 0.625rem 1.125rem;"
+              onclick="DexyfiedCart.addToCart({% if p_airpods != blank %}{{ p_airpods.variants.first.id }}{% else %}null{% endif %}, 1)"
+            >
+              ORDER NOW
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECONDARY STACK: Headphones + Ring -->
+      <div style="display: grid; grid-template-columns: 1fr; gap: 1.25rem;">
+        <!-- Card 1: Headphones -->
+        <div
+          style="border: 1px solid var(--border-main); background: var(--bg-surface); padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; border-radius: var(--radius-xs); box-shadow: var(--shadow-2xs); cursor: pointer;"
+          onclick="window.location.href='{% if p_headphones != blank %}{{ p_headphones.url }}{% else %}/products/wireless-over-ear-stereo-headphones{% endif %}'"
+        >
+          <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-main);">
+            <span style="font-family: var(--font-tech); font-size: 0.625rem; color: var(--text-dim); text-transform: uppercase; font-weight: 600;">
+              REF DX-03
+            </span>
+            <span style="font-family: var(--font-tech); font-size: 0.625rem; color: var(--accent-blue); font-weight: 700;">
+              SAVE PKR 1,500
+            </span>
+          </div>
+
+          <div style="margin: 0.875rem 0; aspect-ratio: 2 / 1; background: var(--bg-surface-subtle); border: 1px solid var(--border-main); display: flex; align-items: center; justify-content: center; padding: 0.75rem; border-radius: var(--radius-xs);">
+            <img src="{{ headphones_img }}" alt="Wireless Over-Ear Stereo Headphones" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+          </div>
+
+          <div>
+            <h4 style="font-family: var(--font-display); font-weight: 600; font-size: 0.9375rem; color: var(--text-primary); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              {{ p_headphones.title | default: 'Wireless Over-Ear Stereo Headphones' }}
+            </h4>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              Full-size wireless stereo listening with cushioned enclosure.
+            </p>
+
+            <div style="margin-top: 0.625rem; padding-top: 0.625rem; border-top: 1px solid var(--border-main); display: flex; align-items: baseline; justify-content: space-between;">
+              <div style="display: flex; align-items: baseline; gap: 0.5rem;">
+                <span style="font-family: var(--font-tech); font-size: 0.625rem; color: var(--text-dim); text-decoration: line-through;">PKR 5,000</span>
+                <span style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--text-primary);">PKR 3,500</span>
+              </div>
+              <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); font-weight: 700;">
+                VIEW ↗
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Luminous Ring -->
+        <div
+          style="border: 1px solid var(--border-main); background: var(--bg-surface); padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; border-radius: var(--radius-xs); box-shadow: var(--shadow-2xs); cursor: pointer;"
+          onclick="window.location.href='{% if p_ring != blank %}{{ p_ring.url }}{% else %}/products/luminous-heartbeat-pattern-finger-ring{% endif %}'"
+        >
+          <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-main);">
+            <span style="font-family: var(--font-tech); font-size: 0.625rem; color: var(--text-dim); text-transform: uppercase; font-weight: 600;">
+              REF DX-04
+            </span>
+            <span style="font-family: var(--font-tech); font-size: 0.625rem; color: var(--accent-blue); font-weight: 700;">
+              SAVE PKR 1,250
+            </span>
+          </div>
+
+          <div style="margin: 0.875rem 0; aspect-ratio: 2 / 1; background: var(--bg-surface-subtle); border: 1px solid var(--border-main); display: flex; align-items: center; justify-content: center; padding: 0.75rem; border-radius: var(--radius-xs);">
+            <img src="{{ ring_img }}" alt="Luminous Heartbeat Pattern Finger Ring" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+          </div>
+
+          <div>
+            <h4 style="font-family: var(--font-display); font-weight: 600; font-size: 0.9375rem; color: var(--text-primary); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              {{ p_ring.title | default: 'Luminous Heartbeat Pattern Finger Ring' }}
+            </h4>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+              Durable band with integrated phosphorescent heartbeat motif.
+            </p>
+
+            <div style="margin-top: 0.625rem; padding-top: 0.625rem; border-top: 1px solid var(--border-main); display: flex; align-items: baseline; justify-content: space-between;">
+              <div style="display: flex; align-items: baseline; gap: 0.5rem;">
+                <span style="font-family: var(--font-tech); font-size: 0.625rem; color: var(--text-dim); text-decoration: line-through;">PKR 1,800</span>
+                <span style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--text-primary);">PKR 550</span>
+              </div>
+              <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); font-weight: 700;">
+                SIZES 6–21 ↗
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 768px) {
+    .section-header-row {
+      flex-direction: row !important;
+      align-items: flex-end !important;
+    }
+  }
+  @media (min-width: 1024px) {
+    .essentials-grid {
+      grid-template-columns: 7fr 5fr !important;
+      gap: 2rem !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Engineered Essentials",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product_main",
+      "label": "Featured AirPods Case"
+    },
+    {
+      "type": "product",
+      "id": "product_sub1",
+      "label": "Secondary Headphones Product"
+    },
+    {
+      "type": "product",
+      "id": "product_sub2",
+      "label": "Secondary Finger Ring Product"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Engineered Essentials Showcase"
+    }
+  ]
+}
+{% endschema %}

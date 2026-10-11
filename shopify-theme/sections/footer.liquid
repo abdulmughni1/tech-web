@@ -1,0 +1,125 @@
+<footer style="background-color: var(--bg-surface); border-top: 1px solid var(--border-main); color: var(--text-primary); padding-top: 3.5rem; padding-bottom: 5rem;">
+  <div class="dexy-container">
+    <div style="display: grid; grid-template-columns: 1fr; gap: 2.5rem;" class="footer-grid">
+      <!-- Brand Column -->
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div style="display: inline-flex; align-items: center; gap: 0.75rem;">
+          <div style="background-color: #09090B; padding: 2px; border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center;">
+            <img src="{{ 'dexyfied-logo-raw.jpg' | asset_url }}" alt="DEXYFIED Mark" style="height: 2.5rem; width: auto; object-fit: contain; mix-blend-mode: screen; filter: contrast(1.25) brightness(1.1);">
+          </div>
+          <div style="display: flex; flex-direction: column; justify-content: center; line-height: 1;">
+            <span style="font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-primary);">
+              DEXYFIED
+            </span>
+            <span style="font-family: var(--font-tech); font-size: 0.6875rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); margin-top: 3px;">
+              HARDWARE // PAKISTAN
+            </span>
+          </div>
+        </div>
+
+        <p style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; max-width: 24rem; margin: 0;">
+          Practical consumer technology selected for everyday durability and utility. Honest specifications, direct pricing, and PKR 150 nationwide shipping across Pakistan.
+        </p>
+
+        <div style="padding-top: 0.5rem;">
+          <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; display: block;">
+            NATIONAL LOGISTICS STATUS:
+          </span>
+          <span style="font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-primary); text-transform: uppercase; display: flex; align-items: center; gap: 0.5rem; margin-top: 0.25rem; font-weight: 500;">
+            <span class="status-dot status-dot-green"></span>
+            COURIER DISPATCH ACTIVE // NATIONWIDE (PKR 150)
+          </span>
+        </div>
+      </div>
+
+      <!-- Catalog Column -->
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <h4 style="font-family: var(--font-tech); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); font-weight: 700; margin: 0;">
+          CATALOG
+        </h4>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.75rem; color: var(--text-muted);">
+          <li><a href="{{ routes.all_products_collection_url }}" style="color: inherit; transition: color 0.15s ease;">All Products</a></li>
+          <li><a href="{{ routes.collections_url }}" style="color: inherit; transition: color 0.15s ease;">Categories</a></li>
+          <li><a href="/collections/smart-watches" style="color: inherit; transition: color 0.15s ease;">Smart Watches</a></li>
+          <li><a href="/collections/audio" style="color: inherit; transition: color 0.15s ease;">Audio & Cases</a></li>
+          <li><a href="/collections/workspace" style="color: inherit; transition: color 0.15s ease;">Workspace Gear</a></li>
+        </ul>
+      </div>
+
+      <!-- Policies Column -->
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <h4 style="font-family: var(--font-tech); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); font-weight: 700; margin: 0;">
+          POLICIES
+        </h4>
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.75rem; color: var(--text-muted);">
+          <li><a href="/pages/refund-policy" style="color: inherit;">7-Day Refund Policy</a></li>
+          <li><a href="/pages/shipping-policy" style="color: inherit;">Shipping Policy</a></li>
+          <li><a href="/pages/privacy-policy" style="color: inherit;">Privacy Policy</a></li>
+          <li><a href="/pages/terms" style="color: inherit;">Terms of Service</a></li>
+          <li><a href="/pages/about" style="color: inherit;">About DEXYFIED</a></li>
+        </ul>
+      </div>
+
+      <!-- Direct Contact Column -->
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <h4 style="font-family: var(--font-tech); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); font-weight: 700; margin: 0;">
+          DIRECT CONTACT
+        </h4>
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.75rem; color: var(--text-muted);">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span>EMAIL:</span>
+            <a href="mailto:dexyfied@gmail.com" style="color: var(--text-primary); font-family: var(--font-tech);">dexyfied@gmail.com</a>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span>PHONE:</span>
+            <a href="tel:+923194389617" style="color: var(--text-primary); font-family: var(--font-tech);">+92 319 4389617</a>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.25rem;">
+            <a href="https://wa.me/923194389617" target="_blank" rel="noopener noreferrer" style="color: #25D366; font-family: var(--font-tech); font-weight: 700; text-decoration: underline;">
+              WHATSAPP OFFICIAL ↗
+            </a>
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem;">
+          <span style="font-family: var(--font-tech); font-size: 0.625rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 0.5rem;">
+            OFFICIAL CHANNELS
+          </span>
+          <div style="display: flex; gap: 0.75rem;">
+            <a href="https://www.instagram.com/dexyfied_store/" target="_blank" rel="noopener noreferrer" class="btn-tech" style="padding: 0.375rem 0.625rem; font-size: 0.6875rem;">
+              INSTAGRAM
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61588688573200" target="_blank" rel="noopener noreferrer" class="btn-tech" style="padding: 0.375rem 0.625rem; font-size: 0.6875rem;">
+              FACEBOOK
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Copyright -->
+    <div style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-main); display: flex; flex-direction: column; sm-flex-direction: row; justify-content: space-between; align-items: center; gap: 1rem; font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-dim);">
+      <div>
+        © {{ 'now' | date: '%Y' }} DEXYFIED // ALL RIGHTS RESERVED.
+      </div>
+      <div>
+        TECH THAT EARNS ITS PLACE • NATIONWIDE DELIVERY PAKISTAN
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  @media (min-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 5fr 2fr 2fr 3fr !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": []
+}
+{% endschema %}

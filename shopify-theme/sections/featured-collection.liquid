@@ -1,0 +1,103 @@
+{% comment %}
+  DEXYFIED Featured Collection / Catalog Grid
+  Displays complete hardware inventory with technical reference codes and quick actions
+{% endcomment %}
+
+{%- liquid
+  assign target_collection = section.settings.collection
+  if target_collection == blank
+    assign target_collection = collections['all']
+  endif
+-%}
+
+<section style="padding: 3.5rem 0; border-bottom: 1px solid var(--border-main); background-color: var(--bg-surface);">
+  <div class="dexy-container">
+    <div style="display: flex; flex-direction: column; justify-content: space-between; margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-main);" class="section-header-row">
+      <div>
+        <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.25rem; font-weight: 600;">
+          {{ section.settings.eyebrow | default: 'COMPLETE INVENTORY // ALL HARDWARE PRODUCTS' }}
+        </span>
+        <h2 style="font-family: var(--font-display); font-weight: 700; font-size: 1.875rem; text-transform: uppercase; letter-spacing: -0.02em; color: var(--text-primary); margin: 0;">
+          {{ section.settings.title | default: 'Current Catalog' }}
+        </h2>
+      </div>
+
+      <a
+        href="{{ target_collection.url | default: routes.all_products_collection_url }}"
+        style="font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; color: var(--accent-blue); font-weight: 700; display: inline-flex; align-items: center; gap: 0.25rem; margin-top: 0.75rem;"
+      >
+        <span>FILTER & SORT FULL CATALOG</span>
+        <span>→</span>
+      </a>
+    </div>
+
+    <!-- Responsive Product Grid -->
+    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;" class="catalog-grid">
+      {% if target_collection.products.size > 0 %}
+        {% for product in target_collection.products limit: section.settings.products_to_show %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+      {% else %}
+        {% for i in (1..4) %}
+          <div class="product-card" style="padding: 1rem; text-align: center;">
+            <div style="aspect-ratio: 1/1; background: var(--bg-surface-elevated); margin-bottom: 1rem;"></div>
+            <p style="font-family: var(--font-display); font-size: 0.875rem;">Sample Product</p>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (min-width: 768px) {
+    .catalog-grid {
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 1.5rem !important;
+    }
+  }
+  @media (min-width: 1280px) {
+    .catalog-grid {
+      grid-template-columns: repeat(4, 1fr) !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Featured Catalog",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Source Collection"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "COMPLETE INVENTORY // ALL HARDWARE PRODUCTS"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Current Catalog"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 16,
+      "step": 2,
+      "label": "Products to Show",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Catalog Grid"
+    }
+  ]
+}
+{% endschema %}
