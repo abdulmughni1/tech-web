@@ -106,6 +106,19 @@ button {
 .font-display { font-family: var(--font-display); }
 .font-tech { font-family: var(--font-tech); }
 
+/* Visibility & Modal Utilities */
+.hidden {
+  display: none !important;
+}
+
+[data-search-modal] {
+  display: none;
+}
+
+[data-search-modal].open {
+  display: flex !important;
+}
+
 /* Common Container */
 .dexy-container {
   max-width: 80rem; /* 1280px */
