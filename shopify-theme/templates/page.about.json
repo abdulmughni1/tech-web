@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-about",
+      "settings": {}
+    },
+    "trust": {
+      "type": "trust-bar",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "trust"
+  ]
+}

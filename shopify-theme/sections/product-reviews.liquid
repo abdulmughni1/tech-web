@@ -1,0 +1,334 @@
+{% comment %}
+  DEXYFIED Product Reviews Section
+  Faithful recreation of React ProductReviewSection.tsx:
+  - Standard Shopify App hook (#shopify-product-reviews) for app compatibility
+  - Native theme review UI with ratings summary
+  - "Write a Customer Review" form with star selector (submits via Shopify contact form + local store)
+  - Submitted reviews list with clean empty state and transparency notice
+{% endcomment %}
+
+<section class="product-reviews-section reveal-on-scroll" data-product-reviews-section data-product-handle="{{ product.handle }}">
+  <div class="dexy-container">
+    <!-- Section Header & Rating Summary -->
+    <div class="reviews-header-bar">
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.375rem; font-weight: 700;">
+          <span class="status-dot status-dot-blue"></span>
+          <span>CUSTOMER FEEDBACK // AUTHENTIC REVIEWS</span>
+        </div>
+        <h2 style="font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; sm:font-size: 1.75rem; text-transform: uppercase; color: var(--text-primary); margin: 0; line-height: 1.2;">
+          Customer Reviews &amp; Ratings
+        </h2>
+      </div>
+
+      <!-- Rating Summary Pill & Write Review Action -->
+      <div class="reviews-summary-actions">
+        <div class="reviews-stats-pill" data-reviews-stats>
+          <div class="star-group" data-stars-summary>
+            {% for i in (1..5) %}
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="#CBD5E1" stroke="#CBD5E1" class="star-icon">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            {% endfor %}
+          </div>
+          <div style="font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-primary);">
+            <span data-avg-rating style="font-weight: 700;">0.0</span> / 5.0
+            <span style="color: var(--text-muted); margin-left: 0.25rem;" data-total-reviews-count>(0 reviews)</span>
+          </div>
+        </div>
+
+        <button type="button" class="btn-tech-primary" data-toggle-review-form style="padding: 0.5rem 0.875rem; font-size: 0.6875rem;">
+          WRITE A REVIEW
+        </button>
+      </div>
+    </div>
+
+    <!-- Official Shopify App Compatibility Block -->
+    <div id="shopify-product-reviews" data-id="{{ product.id }}" style="margin-top: 1rem;">
+      {{ product.metafields.spr.reviews }}
+    </div>
+
+    <!-- Transparency Disclosure Notice -->
+    <div class="reviews-transparency-card">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; margin-top: 2px;">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+      <p style="margin: 0; font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-muted); line-height: 1.5;">
+        <strong style="color: var(--text-primary);">Transparency Notice:</strong> All reviews shown here are genuine customer submissions. Reviews submitted on this device are saved in local storage. To synchronize public reviews across multiple customer devices, a Shopify review application (e.g. Judge.me or Shopify Product Reviews) can be activated in the store admin.
+      </p>
+    </div>
+
+    <!-- Main Grid: Form + Reviews List -->
+    <div class="reviews-main-grid">
+      <!-- Write a Review Form Panel -->
+      <div class="review-form-panel" data-review-form-panel>
+        <div class="review-form-card">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.375rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <h3 style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; color: var(--text-primary); margin: 0;">
+              Write a Customer Review
+            </h3>
+          </div>
+          <p style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-muted); margin: 0 0 1.25rem 0;">
+            Share your honest experience with the <strong style="color: var(--text-primary);">{{ product.title }}</strong>.
+          </p>
+
+          <form id="ProductReviewForm" data-review-form>
+            <!-- Star Rating Input -->
+            <div style="margin-bottom: 1rem;">
+              <label class="form-label">
+                Your Rating *
+              </label>
+              <div class="interactive-star-rating" data-interactive-stars role="radiogroup" aria-label="Rating from 1 to 5 stars">
+                {% for star in (1..5) %}
+                  <button
+                    type="button"
+                    class="star-btn"
+                    data-star-val="{{ star }}"
+                    role="radio"
+                    aria-label="{{ star }} stars"
+                    title="{{ star }} stars"
+                  >
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                  </button>
+                {% endfor %}
+                <span style="font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-primary); font-weight: 700; margin-left: 0.5rem;" data-star-rating-text>
+                  Select rating
+                </span>
+              </div>
+              <input type="hidden" name="rating" id="SelectedRatingValue" value="0" required>
+            </div>
+
+            <!-- Customer Name -->
+            <div style="margin-bottom: 1rem;">
+              <label for="ReviewAuthor" class="form-label">
+                Customer Display Name *
+              </label>
+              <input
+                type="text"
+                id="ReviewAuthor"
+                name="name"
+                required
+                maxlength="50"
+                placeholder="e.g. Tariq Khan"
+                class="form-input"
+              >
+            </div>
+
+            <!-- Customer Email -->
+            <div style="margin-bottom: 1rem;">
+              <label for="ReviewEmail" class="form-label">
+                Email Address (will not be published) *
+              </label>
+              <input
+                type="email"
+                id="ReviewEmail"
+                name="email"
+                required
+                placeholder="name@example.com"
+                class="form-input font-tech"
+              >
+            </div>
+
+            <!-- Review Feedback -->
+            <div style="margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.375rem;">
+                <label for="ReviewBody" class="form-label" style="margin-bottom: 0;">
+                  Your Review *
+                </label>
+                <span style="font-family: var(--font-tech); font-size: 0.625rem; color: var(--text-dim);" data-char-count>
+                  0 / 1000
+                </span>
+              </div>
+              <textarea
+                id="ReviewBody"
+                name="body"
+                rows="4"
+                required
+                minlength="10"
+                maxlength="1000"
+                placeholder="Share details on product build, packaging, performance, or everyday experience..."
+                class="form-input"
+                style="resize: vertical;"
+              ></textarea>
+            </div>
+
+            <!-- Submission Message -->
+            <div class="review-feedback-msg" data-review-feedback-msg style="display: none;"></div>
+
+            <button
+              type="submit"
+              class="btn-tech-primary"
+              style="width: 100%; padding: 0.875rem; font-size: 0.75rem; letter-spacing: 0.08em; display: flex; align-items: center; justify-content: center; gap: 0.5rem;"
+            >
+              <span>SUBMIT CUSTOMER REVIEW</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Reviews Feed Column -->
+      <div class="reviews-feed-column">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-main); margin-bottom: 1rem;">
+          <h4 style="font-family: var(--font-tech); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-primary); font-weight: 700; margin: 0;">
+            SUBMITTED REVIEWS [<span data-feed-count>0</span>]
+          </h4>
+          <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase;">
+            CHRONOLOGICAL ORDER
+          </span>
+        </div>
+
+        <!-- Dynamic Reviews Container -->
+        <div data-reviews-list style="display: flex; flex-direction: column; gap: 0.875rem;">
+          <!-- Loaded via JavaScript from localStorage + default list -->
+        </div>
+
+        <!-- Clean Empty State -->
+        <div class="reviews-empty-state" data-reviews-empty>
+          <div style="width: 2.5rem; height: 2.5rem; border: 1px solid var(--border-main); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem auto; font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-dim); background-color: var(--bg-surface); border-radius: var(--radius-xs);">
+            [ 0 ]
+          </div>
+          <h5 style="font-family: var(--font-display); font-weight: 700; font-size: 1rem; text-transform: uppercase; color: var(--text-primary); margin: 0 0 0.25rem 0;">
+            No reviews submitted yet
+          </h5>
+          <p style="font-family: var(--font-sans); font-size: 0.75rem; color: var(--text-muted); max-width: 22rem; margin: 0 auto; line-height: 1.5;">
+            Be the first to share your experience with this product. Submit your feedback using the form to help fellow shoppers.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-reviews-section {
+    padding-top: 3.5rem;
+    padding-bottom: 5rem;
+    border-top: 1px solid var(--border-main);
+    background-color: var(--bg-surface);
+  }
+  .reviews-header-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-main);
+  }
+  @media (min-width: 768px) {
+    .reviews-header-bar {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+  }
+  .reviews-summary-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .reviews-stats-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.875rem;
+    border: 1px solid var(--border-main);
+    background-color: var(--bg-surface-subtle);
+    border-radius: var(--radius-xs);
+  }
+  .star-group {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .reviews-transparency-card {
+    margin: 1.25rem 0 2rem 0;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--border-main);
+    background-color: var(--bg-surface-subtle);
+    border-radius: var(--radius-xs);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .reviews-main-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  @media (min-width: 1024px) {
+    .reviews-main-grid {
+      grid-template-columns: 5fr 7fr;
+      gap: 2.5rem;
+    }
+  }
+  .review-form-card {
+    padding: 1.5rem;
+    border: 1px solid var(--border-main);
+    background-color: var(--bg-surface-subtle);
+    border-radius: var(--radius-xs);
+    box-shadow: var(--shadow-2xs);
+  }
+  .interactive-star-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .star-btn {
+    padding: 0.25rem;
+    cursor: pointer;
+    color: var(--border-bright);
+    transition: transform 0.15s ease, color 0.15s ease;
+  }
+  .star-btn:hover {
+    transform: scale(1.15);
+  }
+  .star-btn.active, .star-btn.hovered {
+    color: var(--warning-color);
+  }
+  .star-btn.active svg, .star-btn.hovered svg {
+    fill: var(--warning-color);
+    stroke: var(--warning-color);
+  }
+  .reviews-empty-state {
+    padding: 3.5rem 1.5rem;
+    text-align: center;
+    border: 1px dashed var(--border-bright);
+    background-color: var(--bg-surface-subtle);
+    border-radius: var(--radius-xs);
+  }
+  .single-review-card {
+    padding: 1.25rem;
+    border: 1px solid var(--border-main);
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-xs);
+    box-shadow: var(--shadow-2xs);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: border-color 0.2s ease;
+  }
+  .single-review-card:hover {
+    border-color: var(--border-bright);
+  }
+  .review-feedback-msg {
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: var(--radius-xs);
+    font-family: var(--font-tech);
+    font-size: 0.75rem;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product Reviews",
+  "settings": []
+}
+{% endschema %}

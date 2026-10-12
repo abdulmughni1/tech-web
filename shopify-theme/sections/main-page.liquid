@@ -1,25 +1,46 @@
 {% comment %}
   DEXYFIED Editorial Page Section
   For About, Contact, Refund Policy, Shipping Policy, Privacy Policy, Terms
+  Includes automatic fallback handling for empty Contact and About pages
 {% endcomment %}
 
 <div style="background-color: var(--bg-surface); padding-top: 2.5rem; padding-bottom: 6rem;">
-  <div class="dexy-container" style="max-width: 48rem;">
-    <!-- Page Header -->
-    <div style="padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-main); margin-bottom: 2.5rem;">
-      <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.25rem; font-weight: 700;">
-        DEXYFIED DOCUMENTATION // OFFICIAL
-      </span>
-      <h1 style="font-family: var(--font-display); font-weight: 700; font-size: 2.25rem; text-transform: uppercase; color: var(--text-primary); margin: 0; line-height: 1.15;">
-        {{ page.title }}
-      </h1>
-    </div>
+  {% if page.content != blank %}
+    <div class="dexy-container" style="max-width: 48rem;">
+      <!-- Page Header -->
+      <div style="padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-main); margin-bottom: 2.5rem;" class="reveal-on-scroll">
+        <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.25rem; font-weight: 700;">
+          DEXYFIED DOCUMENTATION // OFFICIAL
+        </span>
+        <h1 style="font-family: var(--font-display); font-weight: 700; font-size: 2.25rem; text-transform: uppercase; color: var(--text-primary); margin: 0; line-height: 1.15;">
+          {{ page.title }}
+        </h1>
+      </div>
 
-    <!-- Page Content -->
-    <div style="font-family: var(--font-sans); font-size: 0.875rem; color: var(--text-primary); line-height: 1.7;" class="page-content">
-      {{ page.content }}
+      <!-- Page Content -->
+      <div style="font-family: var(--font-sans); font-size: 0.875rem; color: var(--text-primary); line-height: 1.7;" class="page-content reveal-on-scroll">
+        {{ page.content }}
+      </div>
     </div>
-  </div>
+  {% elsif page.handle == 'contact' or template.suffix == 'contact' %}
+    {% render 'contact-block' %}
+  {% elsif page.handle == 'about' or template.suffix == 'about' %}
+    {% render 'about-block' %}
+  {% else %}
+    <div class="dexy-container" style="max-width: 48rem;">
+      <div style="padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-main); margin-bottom: 2.5rem;">
+        <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.25rem; font-weight: 700;">
+          DEXYFIED DOCUMENTATION // OFFICIAL
+        </span>
+        <h1 style="font-family: var(--font-display); font-weight: 700; font-size: 2.25rem; text-transform: uppercase; color: var(--text-primary); margin: 0; line-height: 1.15;">
+          {{ page.title }}
+        </h1>
+      </div>
+      <div style="font-family: var(--font-tech); font-size: 0.8125rem; color: var(--text-muted); padding: 2rem 0;">
+        DEXYFIED STOREFRONT DOCUMENTATION // IN PROGRESS. PLEASE CHECK BACK SHORTLY.
+      </div>
+    </div>
+  {% endif %}
 </div>
 
 <style>

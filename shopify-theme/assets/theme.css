@@ -240,11 +240,44 @@ button {
   font-weight: 600;
   text-transform: uppercase;
   border-radius: var(--radius-xs);
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 .btn-tech:hover {
   border-color: var(--text-primary);
+  transform: translateY(-1px);
+}
+.btn-tech:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-tech-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background-color: var(--accent-blue);
+  color: #FFFFFF;
+  border: 1px solid var(--accent-blue);
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.btn-tech-primary:hover {
+  background-color: var(--accent-blue-hover);
+  border-color: var(--accent-blue-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 102, 255, 0.25);
+}
+.btn-tech-primary:active {
+  transform: translateY(0) scale(0.98);
 }
 
 /* Header & Announcement */
@@ -316,11 +349,18 @@ button {
   border-radius: var(--radius-xs);
   box-shadow: var(--shadow-2xs);
   overflow: hidden;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.25s ease;
   position: relative;
+  cursor: pointer;
 }
 .product-card:hover {
   border-color: var(--text-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+}
+.dark .product-card:hover, [data-theme="dark"] .product-card:hover {
+  border-color: var(--border-bright);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.45);
 }
 .product-card-img-wrap {
   position: relative;
@@ -489,4 +529,109 @@ button {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-dim);
+}
+
+/* ==========================================================================
+   DEXYFIED Dynamic Motion & Animation System
+   Subtle technical entrance transitions, stagger effects, and micro-interactions
+   ========================================================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulseBlue {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 102, 255, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(0, 102, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 102, 255, 0);
+  }
+}
+
+@keyframes pulseGreen {
+  0% {
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(22, 163, 74, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+  }
+}
+
+.status-dot-blue {
+  background-color: var(--accent-blue);
+  animation: pulseBlue 2.2s infinite;
+}
+
+.status-dot-green {
+  background-color: var(--success-color);
+  animation: pulseGreen 2.2s infinite;
+}
+
+/* Viewport Scroll Reveal */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger Utilities */
+.reveal-delay-1 { transition-delay: 0.06s; }
+.reveal-delay-2 { transition-delay: 0.12s; }
+.reveal-delay-3 { transition-delay: 0.18s; }
+.reveal-delay-4 { transition-delay: 0.24s; }
+
+/* Micro-interaction Helper Classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+/* Accessibility: Respect Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .status-dot-blue, .status-dot-green {
+    animation: none !important;
+  }
 }

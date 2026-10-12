@@ -149,6 +149,19 @@
             {{ product.title }}
           </h1>
 
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+            <div style="display: flex; align-items: center; gap: 2px;">
+              {% for i in (1..5) %}
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#CBD5E1" stroke="#CBD5E1" class="pdp-title-star">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              {% endfor %}
+            </div>
+            <a href="#ProductReviewForm" style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); text-decoration: underline; text-transform: uppercase; font-weight: 600;">
+              Customer Reviews &amp; Ratings ↓
+            </a>
+          </div>
+
           <p style="font-family: var(--font-sans); font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; margin-top: 0.5rem;">
             {{ product.description | strip_html | truncatewords: 28 }}
           </p>

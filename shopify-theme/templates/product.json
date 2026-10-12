@@ -4,6 +4,10 @@
       "type": "main-product",
       "settings": {}
     },
+    "reviews": {
+      "type": "product-reviews",
+      "settings": {}
+    },
     "trust": {
       "type": "trust-bar",
       "settings": {}
@@ -15,6 +19,7 @@
   },
   "order": [
     "main",
+    "reviews",
     "trust",
     "standards"
   ]

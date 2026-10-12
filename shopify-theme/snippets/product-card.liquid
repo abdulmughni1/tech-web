@@ -28,7 +28,16 @@
   endif
 -%}
 
-<div class="product-card group" onclick="window.location.href='{{ product.url }}'">
+<div
+  class="product-card group reveal-on-scroll"
+  data-product-card
+  data-category="{{ product.type | downcase }}"
+  data-tags="{{ product.tags | join: ',' | downcase }}"
+  data-price="{{ product.price | divided_by: 100 }}"
+  data-handle="{{ product.handle }}"
+  data-ref="{{ ref_tag }}"
+  onclick="window.location.href='{{ product.url }}'"
+>
   <!-- Image Frame -->
   <div class="product-card-img-wrap">
     <!-- Ref Badge -->
