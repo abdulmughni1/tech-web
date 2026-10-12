@@ -2,13 +2,22 @@
   DEXYFIED Search Modal Snippet
 {% endcomment %}
 
+<style>
+  [data-search-modal] {
+    display: none !important;
+  }
+  [data-search-modal].open {
+    display: flex !important;
+  }
+</style>
+
 <div
   data-search-modal
   class="hidden"
   role="dialog"
   aria-modal="true"
   aria-hidden="true"
-  style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 100; align-items: flex-start; justify-content: center; padding-top: 5rem; padding-left: 1rem; padding-right: 1rem;"
+  style="display: none !important; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 100; align-items: flex-start; justify-content: center; padding-top: 5rem; padding-left: 1rem; padding-right: 1rem;"
 >
   <div style="background: var(--bg-surface); border: 1px solid var(--border-main); width: 100%; max-width: 36rem; border-radius: var(--radius-xs); box-shadow: var(--shadow-2xl); overflow: hidden;">
     <div style="display: flex; align-items: center; padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-main); gap: 0.75rem;">

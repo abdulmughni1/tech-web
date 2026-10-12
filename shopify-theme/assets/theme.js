@@ -69,7 +69,7 @@ function initSearchModal() {
   function closeModal() {
     modal.classList.remove('open');
     modal.classList.add('hidden');
-    modal.style.display = 'none';
+    modal.style.setProperty('display', 'none', 'important');
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
   }
@@ -77,7 +77,7 @@ function initSearchModal() {
   function openModal() {
     modal.classList.remove('hidden');
     modal.classList.add('open');
-    modal.style.display = 'flex';
+    modal.style.setProperty('display', 'flex', 'important');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     const input = modal.querySelector('input[type="search"]');
