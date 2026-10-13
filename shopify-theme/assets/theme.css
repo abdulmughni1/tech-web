@@ -306,6 +306,99 @@ button {
   transform: translateY(0) scale(0.98);
 }
 
+/* Universal Form System (Contact, Product Reviews, Customer Accounts) */
+.contact-form-card,
+.review-form-card {
+  padding: 1.25rem;
+  border: 1px solid var(--border-main);
+  background-color: var(--bg-surface-subtle);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-2xs);
+}
+@media (min-width: 640px) {
+  .contact-form-card,
+  .review-form-card {
+    padding: 2rem;
+  }
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  width: 100%;
+}
+@media (min-width: 640px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+}
+
+.form-label {
+  display: block;
+  width: 100%;
+  font-family: var(--font-tech);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.form-input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-main);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  padding: 0.6875rem 0.875rem;
+  border-radius: var(--radius-xs);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  min-height: 44px;
+}
+.form-input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 1px var(--accent-blue);
+}
+.form-input::placeholder {
+  color: var(--text-dim);
+}
+
+textarea.form-input {
+  min-height: 110px;
+  line-height: 1.6;
+}
+
+.contact-success-banner {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-xs);
+}
+
+.contact-error-banner {
+  padding: 0.875rem 1rem;
+  margin-bottom: 1.25rem;
+  background-color: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: #DC2626;
+  border-radius: var(--radius-xs);
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+}
+.dark .contact-error-banner, [data-theme="dark"] .contact-error-banner {
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #F87171;
+}
+
 /* Header & Announcement */
 .announcement-bar {
   background-color: var(--bg-surface-elevated);
@@ -672,17 +765,24 @@ button {
   animation: pulseGreen 2.2s infinite;
 }
 
-/* Viewport Scroll Reveal */
+/* Viewport Scroll Reveal - Safe Graceful Degradation */
+.no-js .reveal-on-scroll,
 .reveal-on-scroll {
+  opacity: 1;
+  transform: none;
+}
+
+.js .reveal-on-scroll {
   opacity: 0;
   transform: translateY(18px);
   transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
+.js .reveal-on-scroll.is-revealed,
 .reveal-on-scroll.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 /* Stagger Utilities */

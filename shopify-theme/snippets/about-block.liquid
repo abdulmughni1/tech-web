@@ -1,27 +1,36 @@
 {% comment %}
   DEXYFIED About Block Snippet
-  Shared between sections/main-about.liquid and fallback pages
+  Shared between sections/main-about.liquid and fallback page templates
+  Verified brand identity, core operating principles, and responsive layout
 {% endcomment %}
 
 <div class="dexy-container" style="max-width: 56rem;">
   <!-- Brand Statement Banner -->
-  <div class="about-hero-card reveal-on-scroll">
+  <div class="about-hero-card">
     <div class="about-hero-top">
       <div style="display: flex; align-items: center; gap: 0.75rem;">
-        <div style="background-color: #09090B; padding: 2px; border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center;">
-          <img src="{{ 'dexyfied-logo-raw.jpg' | asset_url }}" alt="DEXYFIED" style="height: 2.25rem; width: auto; object-fit: contain; mix-blend-mode: screen; filter: contrast(1.25) brightness(1.1);">
+        <div style="background-color: #09090B; padding: 4px; border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-main);">
+          <img
+            src="{{ 'dexyfied-logo-raw.jpg' | asset_url }}"
+            alt="DEXYFIED"
+            loading="eager"
+            width="40"
+            height="36"
+            style="height: 2.25rem; width: auto; object-fit: contain; mix-blend-mode: screen; filter: contrast(1.25) brightness(1.1);"
+          >
         </div>
         <div style="display: flex; flex-direction: column; justify-content: center; line-height: 1;">
           <span style="font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-primary);">
             DEXYFIED
           </span>
-          <span style="font-family: var(--font-tech); font-size: 0.625rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim); margin-top: 2px;">
+          <span style="font-family: var(--font-tech); font-size: 0.625rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim); margin-top: 3px;">
             HARDWARE // PAKISTAN
           </span>
         </div>
       </div>
-      <div style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;">
-        EST. PAKISTAN // PHYSICAL TECH STORE
+      <div style="display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;">
+        <span class="status-dot status-dot-blue"></span>
+        <span>EST. PAKISTAN // PHYSICAL TECH STORE</span>
       </div>
     </div>
 
@@ -29,12 +38,13 @@
       <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 0.5rem; font-weight: 700;">
         OUR FOUNDING PRINCIPLE
       </span>
-      <h1 style="font-family: var(--font-display); font-weight: 700; font-size: 2.25rem; text-transform: uppercase; color: var(--text-primary); line-height: 1.1; margin: 0 0 1rem 0;">
+      <h1 style="font-family: var(--font-display); font-weight: 700; font-size: clamp(1.75rem, 5vw, 2.5rem); text-transform: uppercase; color: var(--text-primary); line-height: 1.1; margin: 0 0 1rem 0;">
         Tech That Earns Its Place.
       </h1>
-      <p style="font-family: var(--font-sans); font-size: 1rem; color: var(--text-muted); max-width: 42rem; line-height: 1.7; margin: 0;">
+      <p style="font-family: var(--font-sans); font-size: 1rem; color: var(--text-muted); max-width: 44rem; line-height: 1.7; margin: 0;">
         DEXYFIED was founded on a straightforward principle: consumer technology should be practical, accessible, clearly priced, and dependable in daily use.
       </p>
+
       {% if page.content != blank %}
         <div style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border-main); font-family: var(--font-sans); font-size: 0.875rem; color: var(--text-muted); line-height: 1.7;" class="page-content">
           {{ page.content }}
@@ -46,8 +56,8 @@
   <!-- Core Pillars Grid -->
   <div style="margin-top: 2rem;" class="about-pillars-grid">
     <!-- Pillar 1 -->
-    <div class="about-pillar-card reveal-on-scroll">
-      <div style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-primary); text-transform: uppercase; font-weight: 700;">
+    <div class="about-pillar-card">
+      <div style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); text-transform: uppercase; font-weight: 700;">
         01 // VALUE
       </div>
       <h3 style="font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; text-transform: uppercase; color: var(--text-primary); margin: 0.5rem 0 0.5rem 0;">
@@ -59,8 +69,8 @@
     </div>
 
     <!-- Pillar 2 -->
-    <div class="about-pillar-card reveal-on-scroll">
-      <div style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-primary); text-transform: uppercase; font-weight: 700;">
+    <div class="about-pillar-card">
+      <div style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); text-transform: uppercase; font-weight: 700;">
         02 // UTILITY
       </div>
       <h3 style="font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; text-transform: uppercase; color: var(--text-primary); margin: 0.5rem 0 0.5rem 0;">
@@ -72,8 +82,8 @@
     </div>
 
     <!-- Pillar 3 -->
-    <div class="about-pillar-card reveal-on-scroll">
-      <div style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-primary); text-transform: uppercase; font-weight: 700;">
+    <div class="about-pillar-card">
+      <div style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); text-transform: uppercase; font-weight: 700;">
         03 // CLARITY
       </div>
       <h3 style="font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; text-transform: uppercase; color: var(--text-primary); margin: 0.5rem 0 0.5rem 0;">
@@ -85,8 +95,12 @@
     </div>
   </div>
 
-  <!-- Operating Philosophy -->
-  <div class="about-philosophy-card reveal-on-scroll" style="margin-top: 2rem;">
+  <!-- Operating Philosophy Card -->
+  <div class="about-philosophy-card" style="margin-top: 2rem;">
+    <div style="display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; font-weight: 700;">
+      <span class="status-dot status-dot-blue"></span>
+      <span>TRANSPARENT SPECIFICATIONS</span>
+    </div>
     <h2 style="font-family: var(--font-display); font-weight: 700; font-size: 1.375rem; text-transform: uppercase; color: var(--text-primary); margin: 0 0 1rem 0;">
       What We Stand For
     </h2>
@@ -108,7 +122,7 @@
         class="btn-tech-primary"
         style="padding: 0.75rem 1.25rem; font-size: 0.75rem; letter-spacing: 0.08em; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; gap: 0.5rem; text-decoration: none;"
       >
-        <span>EXPLORE PRODUCTS</span>
+        <span>EXPLORE HARDWARE CATALOG</span>
         <span>→</span>
       </a>
     </div>
@@ -117,7 +131,7 @@
 
 <style>
   .about-hero-card {
-    padding: 1.25rem;
+    padding: 1.5rem;
     border: 1px solid var(--border-main);
     background-color: var(--bg-surface-subtle);
     border-radius: var(--radius-xs);
@@ -132,7 +146,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    padding-bottom: 2rem;
+    padding-bottom: 1.75rem;
     border-bottom: 1px solid var(--border-main);
   }
   @media (min-width: 640px) {
@@ -153,24 +167,19 @@
     }
   }
   .about-pillar-card {
-    padding: 1.25rem;
+    padding: 1.5rem;
     border: 1px solid var(--border-main);
     background-color: var(--bg-surface);
     border-radius: var(--radius-xs);
     box-shadow: var(--shadow-2xs);
     transition: transform 0.2s ease, border-color 0.2s ease;
   }
-  @media (min-width: 640px) {
-    .about-pillar-card {
-      padding: 1.5rem;
-    }
-  }
   .about-pillar-card:hover {
     transform: translateY(-2px);
     border-color: var(--border-bright);
   }
   .about-philosophy-card {
-    padding: 1.25rem;
+    padding: 1.5rem;
     border: 1px solid var(--border-main);
     background-color: var(--bg-surface);
     border-radius: var(--radius-xs);

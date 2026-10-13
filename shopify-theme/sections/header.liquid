@@ -5,9 +5,21 @@
       <a href="{{ routes.root_url }}" class="header-logo-link" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; min-width: 0;">
         <div style="background-color: #09090B; padding: 2px; border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden;">
           {% if section.settings.logo != blank %}
-            <img src="{{ section.settings.logo | image_url: height: 36 }}" alt="{{ shop.name }}" style="height: 2rem; width: auto; object-fit: contain;">
+            <img
+              src="{{ section.settings.logo | image_url: height: 36 }}"
+              alt="{{ shop.name }}"
+              width="120"
+              height="36"
+              style="height: 2rem; width: auto; object-fit: contain;"
+            >
           {% else %}
-            <img src="{{ 'dexyfied-logo-raw.jpg' | asset_url }}" alt="DEXYFIED Mark" style="height: 2rem; width: auto; object-fit: contain; mix-blend-mode: screen; filter: contrast(1.25) brightness(1.1);">
+            <img
+              src="{{ 'dexyfied-logo-raw.jpg' | asset_url }}"
+              alt="DEXYFIED Mark"
+              width="40"
+              height="36"
+              style="height: 2rem; width: auto; object-fit: contain; mix-blend-mode: screen; filter: contrast(1.25) brightness(1.1);"
+            >
           {% endif %}
         </div>
         <div style="display: flex; flex-direction: column; justify-content: center; line-height: 1; min-width: 0;">
@@ -23,16 +35,12 @@
       <!-- Desktop Navigation -->
       {%- liquid
         assign menu_links = linklists[section.settings.menu].links
-        assign has_categories = false
         assign has_about = false
         assign has_contact = false
 
         for link in menu_links
           assign l_url = link.url | downcase
           assign l_title = link.title | downcase
-          if l_url contains 'categories' or l_url == routes.collections_url or l_title contains 'categor'
-            assign has_categories = true
-          endif
           if l_url contains 'about' or l_title contains 'about'
             assign has_about = true
           endif
@@ -45,18 +53,17 @@
       <nav class="nav-links" style="display: none;">
         {% if menu_links.size > 0 %}
           {% for link in menu_links %}
-            <a
-              href="{{ link.url }}"
-              class="nav-link {% if link.active or request.path == link.url %}active{% endif %}"
-            >
-              {{ link.title }}
-            </a>
+            {% assign l_url = link.url | downcase %}
+            {% assign l_title = link.title | downcase %}
+            {% unless l_url contains 'categor' or l_title contains 'categor' or l_url == routes.collections_url %}
+              <a
+                href="{{ link.url }}"
+                class="nav-link {% if link.active or request.path == link.url %}active{% endif %}"
+              >
+                {{ link.title }}
+              </a>
+            {% endunless %}
           {% endfor %}
-          {% unless has_categories %}
-            <a href="{{ routes.collections_url }}" class="nav-link {% if request.path == routes.collections_url %}active{% endif %}">
-              Categories
-            </a>
-          {% endunless %}
           {% unless has_about %}
             <a href="/pages/about" class="nav-link {% if request.path contains '/pages/about' %}active{% endif %}">
               About
@@ -70,7 +77,6 @@
         {% else %}
           <a href="{{ routes.root_url }}" class="nav-link {% if request.path == routes.root_url %}active{% endif %}">Home</a>
           <a href="{{ routes.all_products_collection_url }}" class="nav-link {% if request.path == routes.all_products_collection_url %}active{% endif %}">Catalog</a>
-          <a href="{{ routes.collections_url }}" class="nav-link {% if request.path == routes.collections_url %}active{% endif %}">Categories</a>
           <a href="/pages/about" class="nav-link {% if request.path contains '/pages/about' %}active{% endif %}">About</a>
           <a href="/pages/contact" class="nav-link {% if request.path contains '/pages/contact' %}active{% endif %}">Contact</a>
         {% endif %}
@@ -148,23 +154,18 @@
     <div style="display: flex; flex-direction: column; gap: 0.5rem;">
       {% if menu_links.size > 0 %}
         {% for link in menu_links %}
-          <a
-            href="{{ link.url }}"
-            class="mobile-menu-item"
-            style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center; border-radius: var(--radius-xs); color: {% if link.active or request.path == link.url %}var(--accent-blue){% else %}var(--text-primary){% endif %}; font-weight: {% if link.active or request.path == link.url %}700{% else %}500{% endif %}; background: {% if link.active or request.path == link.url %}var(--bg-surface-elevated){% else %}transparent{% endif %};"
-          >
-            {{ link.title }}
-          </a>
+          {% assign l_url = link.url | downcase %}
+          {% assign l_title = link.title | downcase %}
+          {% unless l_url contains 'categor' or l_title contains 'categor' or l_url == routes.collections_url %}
+            <a
+              href="{{ link.url }}"
+              class="mobile-menu-item"
+              style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center; border-radius: var(--radius-xs); color: {% if link.active or request.path == link.url %}var(--accent-blue){% else %}var(--text-primary){% endif %}; font-weight: {% if link.active or request.path == link.url %}700{% else %}500{% endif %}; background: {% if link.active or request.path == link.url %}var(--bg-surface-elevated){% else %}transparent{% endif %};"
+            >
+              {{ link.title }}
+            </a>
+          {% endunless %}
         {% endfor %}
-        {% unless has_categories %}
-          <a
-            href="{{ routes.collections_url }}"
-            class="mobile-menu-item"
-            style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center; border-radius: var(--radius-xs); color: {% if request.path == routes.collections_url %}var(--accent-blue){% else %}var(--text-primary){% endif %}; font-weight: {% if request.path == routes.collections_url %}700{% else %}500{% endif %}; background: {% if request.path == routes.collections_url %}var(--bg-surface-elevated){% else %}transparent{% endif %};"
-          >
-            Categories
-          </a>
-        {% endunless %}
         {% unless has_about %}
           <a
             href="/pages/about"
@@ -186,7 +187,6 @@
       {% else %}
         <a href="{{ routes.root_url }}" style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center;">Home</a>
         <a href="{{ routes.all_products_collection_url }}" style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center;">Catalog</a>
-        <a href="{{ routes.collections_url }}" style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center;">Categories</a>
         <a href="/pages/about" style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center;">About</a>
         <a href="/pages/contact" style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center;">Contact</a>
       {% endif %}

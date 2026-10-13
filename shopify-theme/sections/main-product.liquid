@@ -90,6 +90,9 @@
               data-gallery-main-image
               src="{{ main_image_src }}"
               alt="{{ product.featured_media.alt | default: product.title | escape }}"
+              loading="eager"
+              width="600"
+              height="600"
               style="max-height: 88%; max-width: 88%; object-fit: contain; transition: transform 0.25s ease;"
             >
           </div>
@@ -104,7 +107,14 @@
                   data-alt="{{ media.alt | default: product.title | escape }}"
                   class="pdp-thumb-item {% if forloop.first %}active{% endif %}"
                 >
-                  <img src="{{ media | image_url: width: 140 }}" alt="{{ media.alt | default: product.title | escape }}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                  <img
+                    src="{{ media | image_url: width: 140 }}"
+                    alt="{{ media.alt | default: product.title | escape }}"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                    style="max-height: 100%; max-width: 100%; object-fit: contain;"
+                  >
                 </div>
               {% endfor %}
             </div>
@@ -156,7 +166,7 @@
                 </svg>
               {% endfor %}
             </div>
-            <a href="#ProductReviewForm" style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); text-decoration: underline; text-transform: uppercase; font-weight: 600;">
+            <a href="#ProductReviews" style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--accent-blue); text-decoration: underline; text-transform: uppercase; font-weight: 600;">
               Customer Reviews &amp; Ratings ↓
             </a>
           </div>

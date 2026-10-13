@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
   initCatalogFilters();
   initProductReviews();
+  initRouteRecovery();
 });
 
 // Theme Toggle System (Dark / Light)
@@ -188,11 +189,23 @@ function initScrollReveal() {
       }
     });
   }, {
-    threshold: 0.08,
-    rootMargin: '0px 0px -30px 0px'
+    threshold: 0.05,
+    rootMargin: '0px 0px 50px 0px'
   });
 
-  elements.forEach(el => observer.observe(el));
+  elements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      el.classList.add('is-revealed');
+    } else {
+      observer.observe(el);
+    }
+  });
+
+  // Re-check for Shopify Theme Editor section load/reorder events
+  document.addEventListener('shopify:section:load', () => {
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => el.classList.add('is-revealed'));
+  });
 }
 
 // Shop Catalog Interactive Filters & Sorting
@@ -328,7 +341,7 @@ function initCatalogFilters() {
   applyFiltersAndSort();
 }
 
-// Product Reviews System (Local Storage + Standard UI)
+// Product Reviews System (Local Storage + Accessible Rating + Standard UI)
 function initProductReviews() {
   const section = document.querySelector('[data-product-reviews-section]');
   if (!section) return;
@@ -336,7 +349,8 @@ function initProductReviews() {
   const handle = section.getAttribute('data-product-handle') || 'general';
   const storageKey = 'dexyfied-reviews-' + handle;
 
-  const toggleBtn = section.querySelector('[data-toggle-review-form]');
+  const openBtns = section.querySelectorAll('[data-open-review-form], [data-toggle-review-form]');
+  const closeBtn = section.querySelector('[data-close-review-form]');
   const formPanel = section.querySelector('[data-review-form-panel]');
   const form = section.querySelector('[data-review-form]');
   const starsContainer = section.querySelector('[data-interactive-stars]');
@@ -344,6 +358,7 @@ function initProductReviews() {
   const ratingText = section.querySelector('[data-star-rating-text]');
   const charCount = section.querySelector('[data-char-count]');
   const bodyInput = section.querySelector('#ReviewBody');
+  const titleInput = section.querySelector('#ReviewTitle');
   const feedbackMsg = section.querySelector('[data-review-feedback-msg]');
   const listEl = section.querySelector('[data-reviews-list]');
   const emptyEl = section.querySelector('[data-reviews-empty]');
@@ -352,47 +367,87 @@ function initProductReviews() {
   const totalReviewsEl = section.querySelector('[data-total-reviews-count]');
   const starsSummary = section.querySelector('[data-stars-summary]');
 
-  // Toggle Form visibility / smooth scroll
-  if (toggleBtn && formPanel) {
-    toggleBtn.addEventListener('click', () => {
-      formPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      const firstInput = formPanel.querySelector('#ReviewAuthor');
-      if (firstInput) firstInput.focus();
+  const ratingDescriptions = {
+    1: '1.0 / 5.0 — POOR',
+    2: '2.0 / 5.0 — FAIR',
+    3: '3.0 / 5.0 — SATISFACTORY',
+    4: '4.0 / 5.0 — VERY GOOD',
+    5: '5.0 / 5.0 — EXCELLENT'
+  };
+
+  // Open & Close Review Form Handlers
+  if (openBtns.length && formPanel) {
+    openBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        formPanel.style.display = 'block';
+        formPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => {
+          const firstInput = formPanel.querySelector('#ReviewAuthor');
+          if (firstInput) firstInput.focus();
+        }, 200);
+      });
     });
   }
 
-  // Interactive Stars
+  if (closeBtn && formPanel) {
+    closeBtn.addEventListener('click', () => {
+      formPanel.style.display = 'none';
+    });
+  }
+
+  // Interactive Accessible Star Rating
   let selectedRating = 0;
   if (starsContainer) {
     const starBtns = starsContainer.querySelectorAll('.star-btn');
 
+    function updateRatingUI(val, isTemporary) {
+      starBtns.forEach(btn => {
+        const starVal = parseInt(btn.getAttribute('data-star-val'), 10);
+        btn.classList.toggle('active', starVal <= val);
+        if (!isTemporary) {
+          btn.setAttribute('aria-checked', starVal === val ? 'true' : 'false');
+        }
+      });
+      if (ratingText) {
+        if (val > 0) {
+          ratingText.textContent = ratingDescriptions[val] || `${val}.0 / 5.0`;
+          ratingText.style.color = 'var(--text-primary)';
+          ratingText.style.borderColor = 'var(--accent-blue)';
+        } else {
+          ratingText.textContent = 'SELECT RATING (1 TO 5 STARS)';
+          ratingText.style.color = 'var(--text-dim)';
+          ratingText.style.borderColor = 'var(--border-main)';
+        }
+      }
+    }
+
     starBtns.forEach(btn => {
       const val = parseInt(btn.getAttribute('data-star-val'), 10);
 
-      btn.addEventListener('mouseenter', () => {
-        highlightStars(val);
-        if (ratingText) ratingText.textContent = `${val} / 5 Stars`;
-      });
-
-      btn.addEventListener('mouseleave', () => {
-        highlightStars(selectedRating);
-        if (ratingText) ratingText.textContent = selectedRating > 0 ? `${selectedRating} / 5 Stars` : 'Select rating';
-      });
+      btn.addEventListener('mouseenter', () => updateRatingUI(val, true));
+      btn.addEventListener('mouseleave', () => updateRatingUI(selectedRating, false));
 
       btn.addEventListener('click', () => {
         selectedRating = val;
         if (ratingInput) ratingInput.value = val;
-        highlightStars(val);
-        if (ratingText) ratingText.textContent = `${val} / 5 Stars`;
+        updateRatingUI(val, false);
       });
     });
 
-    function highlightStars(count) {
-      starBtns.forEach(btn => {
-        const val = parseInt(btn.getAttribute('data-star-val'), 10);
-        btn.classList.toggle('active', val <= count);
-      });
-    }
+    // Keyboard Accessibility for Rating Selector
+    starsContainer.addEventListener('keydown', (e) => {
+      if (['ArrowRight', 'ArrowUp'].includes(e.key)) {
+        e.preventDefault();
+        selectedRating = Math.min(5, (selectedRating || 0) + 1);
+        if (ratingInput) ratingInput.value = selectedRating;
+        updateRatingUI(selectedRating, false);
+      } else if (['ArrowLeft', 'ArrowDown'].includes(e.key)) {
+        e.preventDefault();
+        selectedRating = Math.max(1, (selectedRating || 1) - 1);
+        if (ratingInput) ratingInput.value = selectedRating;
+        updateRatingUI(selectedRating, false);
+      }
+    });
   }
 
   // Character Counter
@@ -477,14 +532,19 @@ function initProductReviews() {
         starSvgs += `<svg width="14" height="14" viewBox="0 0 24 24" fill="${fill}" stroke="${fill}"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
       }
 
+      const titleHtml = r.title
+        ? `<h5 style="font-family: var(--font-display); font-weight: 700; font-size: 0.9375rem; text-transform: uppercase; color: var(--text-primary); margin: 0.25rem 0 0 0;">${escapeHtml(r.title)}</h5>`
+        : '';
+
       card.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.75rem; flex-wrap: wrap;">
           <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
             <span style="font-family: var(--font-display); font-weight: 700; font-size: 0.875rem; color: var(--text-primary); text-transform: uppercase;">
               ${escapeHtml(r.author)}
             </span>
-            <span style="font-family: var(--font-tech); font-size: 0.625rem; color: var(--text-muted); border: 1px solid var(--border-main); padding: 0.125rem 0.375rem; border-radius: var(--radius-xs); text-transform: uppercase;">
-              YOUR SUBMISSION
+            <span style="display: inline-flex; align-items: center; gap: 0.25rem; font-family: var(--font-tech); font-size: 0.625rem; color: var(--success-color); border: 1px solid var(--border-main); background-color: var(--bg-surface-subtle); padding: 0.125rem 0.375rem; border-radius: var(--radius-xs); text-transform: uppercase; font-weight: 600;">
+              <span class="status-dot status-dot-green" style="width: 5px; height: 5px;"></span>
+              <span>VERIFIED BUYER</span>
             </span>
           </div>
           <div style="display: flex; align-items: center; gap: 0.5rem;">
@@ -496,6 +556,7 @@ function initProductReviews() {
             </span>
           </div>
         </div>
+        ${titleHtml}
         <p style="font-family: var(--font-sans); font-size: 0.8125rem; color: var(--text-muted); line-height: 1.6; margin: 0; white-space: pre-line;">
           ${escapeHtml(r.body)}
         </p>
@@ -515,11 +576,12 @@ function initProductReviews() {
       e.preventDefault();
 
       if (!selectedRating || selectedRating < 1) {
-        showFeedback('Please select a star rating between 1 and 5.', true);
+        showFeedback('Please select a rating between 1 and 5 stars.', true);
         return;
       }
 
       const nameVal = form.querySelector('#ReviewAuthor')?.value.trim();
+      const titleVal = form.querySelector('#ReviewTitle')?.value.trim();
       const bodyVal = form.querySelector('#ReviewBody')?.value.trim();
 
       if (!nameVal || nameVal.length < 2) {
@@ -528,12 +590,13 @@ function initProductReviews() {
       }
 
       if (!bodyVal || bodyVal.length < 10) {
-        showFeedback('Review comments must be at least 10 characters.', true);
+        showFeedback('Detailed feedback must be at least 10 characters.', true);
         return;
       }
 
       const newReview = {
         author: nameVal,
+        title: titleVal || '',
         rating: selectedRating,
         body: bodyVal,
         date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
@@ -546,12 +609,19 @@ function initProductReviews() {
       form.reset();
       selectedRating = 0;
       if (starsContainer) {
-        starsContainer.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
+        starsContainer.querySelectorAll('.star-btn').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-checked', 'false');
+        });
       }
-      if (ratingText) ratingText.textContent = 'Select rating';
+      if (ratingText) {
+        ratingText.textContent = 'SELECT RATING (1 TO 5 STARS)';
+        ratingText.style.color = 'var(--text-dim)';
+        ratingText.style.borderColor = 'var(--border-main)';
+      }
       if (charCount) charCount.textContent = '0 / 1000';
 
-      showFeedback('Thank you! Your verified review has been recorded.', false);
+      showFeedback('Thank you! Your verified review has been submitted successfully.', false);
     });
   }
 
@@ -560,18 +630,37 @@ function initProductReviews() {
     feedbackMsg.textContent = msg;
     feedbackMsg.style.display = 'block';
     if (isError) {
-      feedbackMsg.style.backgroundColor = 'rgba(220, 38, 38, 0.1)';
-      feedbackMsg.style.color = '#DC2626';
-      feedbackMsg.style.border = '1px solid rgba(220, 38, 38, 0.3)';
+      feedbackMsg.className = 'contact-error-banner';
     } else {
-      feedbackMsg.style.backgroundColor = 'rgba(22, 163, 74, 0.1)';
-      feedbackMsg.style.color = 'var(--success-color)';
-      feedbackMsg.style.border = '1px solid rgba(22, 163, 74, 0.3)';
+      feedbackMsg.className = 'contact-success-banner';
+      feedbackMsg.style.padding = '1.25rem';
     }
     setTimeout(() => {
       feedbackMsg.style.display = 'none';
-    }, 6000);
+    }, 7000);
   }
 
   renderReviews();
 }
+
+// Dynamic 404 Route Recovery for unconfigured Shopify Admin pages
+function initRouteRecovery() {
+  const notFoundEl = document.querySelector('[data-404-default]');
+  const aboutFallback = document.querySelector('[data-404-about-fallback]');
+  const contactFallback = document.querySelector('[data-404-contact-fallback]');
+  if (!notFoundEl) return;
+
+  const path = (window.location.pathname || '').toLowerCase();
+  if (path.includes('/pages/about') || path.includes('/about')) {
+    if (aboutFallback) {
+      notFoundEl.style.display = 'none';
+      aboutFallback.style.display = 'block';
+    }
+  } else if (path.includes('/pages/contact') || path.includes('/contact')) {
+    if (contactFallback) {
+      notFoundEl.style.display = 'none';
+      contactFallback.style.display = 'block';
+    }
+  }
+}
+

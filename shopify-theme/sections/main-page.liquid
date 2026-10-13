@@ -4,10 +4,26 @@
   Includes automatic fallback handling for empty Contact and About pages
 {% endcomment %}
 
+{%- liquid
+  assign p_handle = page.handle | default: '' | downcase
+  assign p_title = page.title | default: '' | downcase
+  assign p_url = request.path | default: '' | downcase
+
+  assign is_about = false
+  if p_handle contains 'about' or p_title contains 'about' or p_url contains 'about' or template.suffix == 'about' or p_handle contains 'story' or p_title contains 'story'
+    assign is_about = true
+  endif
+
+  assign is_contact = false
+  if p_handle contains 'contact' or p_title contains 'contact' or p_url contains 'contact' or template.suffix == 'contact'
+    assign is_contact = true
+  endif
+-%}
+
 <div style="background-color: var(--bg-surface); padding-top: 2.5rem; padding-bottom: 6rem;">
-  {% if page.handle contains 'about' or template.suffix == 'about' %}
+  {% if is_about %}
     {% render 'about-block' %}
-  {% elsif page.handle contains 'contact' or template.suffix == 'contact' %}
+  {% elsif is_contact %}
     {% render 'contact-block' %}
   {% elsif page.content != blank %}
     <div class="dexy-container" style="max-width: 48rem;">
