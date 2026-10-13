@@ -1,13 +1,42 @@
 {%- if section.settings.show_announcement -%}
   <div class="announcement-bar">
-    <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
-      <span style="font-weight: 600; color: var(--text-primary);">{{ section.settings.text_1 | default: 'NATIONWIDE DELIVERY PKR 150' }}</span>
-      <span style="color: var(--border-bright);">•</span>
-      <span>{{ section.settings.text_2 | default: '7-DAY RETURN POLICY' }}</span>
-      <span style="color: var(--border-bright);">•</span>
-      <span>SUPPORT: {{ section.settings.support_phone | default: '+92 319 4389617' }}</span>
+    <div class="announcement-content">
+      <span class="announcement-primary">{{ section.settings.text_1 | default: 'NATIONWIDE DELIVERY PKR 150' }}</span>
+      <span class="announcement-separator">•</span>
+      <span class="announcement-secondary">{{ section.settings.text_2 | default: '7-DAY RETURN POLICY' }}</span>
+      <span class="announcement-separator announcement-phone-item">•</span>
+      <span class="announcement-phone-item">SUPPORT: {{ section.settings.support_phone | default: '+92 319 4389617' }}</span>
     </div>
   </div>
+
+  <style>
+    .announcement-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      line-height: 1.4;
+    }
+    .announcement-primary {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .announcement-separator {
+      color: var(--border-bright);
+    }
+    .announcement-phone-item {
+      display: none;
+    }
+    @media (min-width: 640px) {
+      .announcement-content {
+        gap: 0.75rem;
+      }
+      .announcement-phone-item {
+        display: inline;
+      }
+    }
+  </style>
 {%- endif -%}
 
 {% schema %}

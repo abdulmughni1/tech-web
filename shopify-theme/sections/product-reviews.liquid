@@ -165,7 +165,7 @@
             <button
               type="submit"
               class="btn-tech-primary"
-              style="width: 100%; padding: 0.875rem; font-size: 0.75rem; letter-spacing: 0.08em; display: flex; align-items: center; justify-content: center; gap: 0.5rem;"
+              style="width: 100%; min-height: 48px; padding: 0.875rem; font-size: 0.75rem; letter-spacing: 0.08em; display: flex; align-items: center; justify-content: center; gap: 0.5rem;"
             >
               <span>SUBMIT CUSTOMER REVIEW</span>
             </button>
@@ -269,22 +269,35 @@
     }
   }
   .review-form-card {
-    padding: 1.5rem;
+    padding: 1rem;
     border: 1px solid var(--border-main);
     background-color: var(--bg-surface-subtle);
     border-radius: var(--radius-xs);
     box-shadow: var(--shadow-2xs);
   }
+  @media (min-width: 640px) {
+    .review-form-card {
+      padding: 1.5rem;
+    }
+  }
   .interactive-star-rating {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.125rem;
+    flex-wrap: wrap;
   }
   .star-btn {
-    padding: 0.25rem;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     color: var(--border-bright);
     transition: transform 0.15s ease, color 0.15s ease;
+    background: transparent;
+    border: none;
   }
   .star-btn:hover {
     transform: scale(1.15);

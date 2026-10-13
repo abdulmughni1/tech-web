@@ -35,6 +35,11 @@
       <p style="font-family: var(--font-sans); font-size: 1rem; color: var(--text-muted); max-width: 42rem; line-height: 1.7; margin: 0;">
         DEXYFIED was founded on a straightforward principle: consumer technology should be practical, accessible, clearly priced, and dependable in daily use.
       </p>
+      {% if page.content != blank %}
+        <div style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border-main); font-family: var(--font-sans); font-size: 0.875rem; color: var(--text-muted); line-height: 1.7;" class="page-content">
+          {{ page.content }}
+        </div>
+      {% endif %}
     </div>
   </div>
 
@@ -101,7 +106,7 @@
       <a
         href="{{ routes.all_products_collection_url }}"
         class="btn-tech-primary"
-        style="padding: 0.75rem 1.25rem; font-size: 0.75rem; letter-spacing: 0.08em; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;"
+        style="padding: 0.75rem 1.25rem; font-size: 0.75rem; letter-spacing: 0.08em; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; gap: 0.5rem; text-decoration: none;"
       >
         <span>EXPLORE PRODUCTS</span>
         <span>→</span>
@@ -112,7 +117,7 @@
 
 <style>
   .about-hero-card {
-    padding: 2rem;
+    padding: 1.25rem;
     border: 1px solid var(--border-main);
     background-color: var(--bg-surface-subtle);
     border-radius: var(--radius-xs);
@@ -148,19 +153,24 @@
     }
   }
   .about-pillar-card {
-    padding: 1.5rem;
+    padding: 1.25rem;
     border: 1px solid var(--border-main);
     background-color: var(--bg-surface);
     border-radius: var(--radius-xs);
     box-shadow: var(--shadow-2xs);
     transition: transform 0.2s ease, border-color 0.2s ease;
   }
+  @media (min-width: 640px) {
+    .about-pillar-card {
+      padding: 1.5rem;
+    }
+  }
   .about-pillar-card:hover {
     transform: translateY(-2px);
     border-color: var(--border-bright);
   }
   .about-philosophy-card {
-    padding: 2rem;
+    padding: 1.25rem;
     border: 1px solid var(--border-main);
     background-color: var(--bg-surface);
     border-radius: var(--radius-xs);

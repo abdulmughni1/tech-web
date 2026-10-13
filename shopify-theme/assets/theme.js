@@ -49,15 +49,41 @@ function initMobileMenu() {
   const menu = document.querySelector('[data-mobile-menu]');
   if (!trigger || !menu) return;
 
-  trigger.addEventListener('click', () => {
+  function closeMenu() {
+    menu.classList.add('hidden');
+    menu.style.display = 'none';
+  }
+
+  function openMenu() {
+    menu.classList.remove('hidden');
+    menu.style.display = 'block';
+  }
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
     const isHidden = menu.classList.contains('hidden') || menu.style.display === 'none';
     if (isHidden) {
-      menu.classList.remove('hidden');
-      menu.style.display = 'block';
+      openMenu();
     } else {
-      menu.classList.add('hidden');
-      menu.style.display = 'none';
+      closeMenu();
     }
+  });
+
+  // Close when clicking any navigation link
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => closeMenu());
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target) && !trigger.contains(e.target)) {
+      closeMenu();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
   });
 }
 

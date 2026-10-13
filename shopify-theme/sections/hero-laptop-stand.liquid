@@ -37,33 +37,33 @@
         </div>
 
         <!-- Headline -->
-        <h1 style="font-family: var(--font-display); font-weight: 700; font-size: 2.5rem; line-height: 1.05; text-transform: uppercase; letter-spacing: -0.02em; color: var(--text-primary); margin: 0;" class="hero-title">
+        <h1 class="hero-title">
           {{ section.settings.headline | default: 'A Better Setup Starts Here.' }}
         </h1>
 
         <!-- Supporting text -->
-        <p style="font-family: var(--font-sans); font-size: 1rem; color: var(--text-muted); line-height: 1.6; max-width: 34rem; margin: 0;">
+        <p style="font-family: var(--font-sans); font-size: 0.9375rem; color: var(--text-muted); line-height: 1.6; max-width: 34rem; margin: 0;">
           {{ section.settings.subheading | default: 'Give your workspace a cleaner, more comfortable setup with our adjustable portable laptop stand.' }}
         </p>
 
         <!-- Metrics Row -->
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; padding: 0.875rem 0; border-top: 1px solid var(--border-main); border-bottom: 1px solid var(--border-main); max-width: 32rem; font-family: var(--font-tech);">
+        <div class="hero-metrics-row">
           <div>
-            <div style="font-weight: 700; font-size: 1.125rem; color: var(--text-primary);">PKR 150</div>
-            <div style="font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; font-weight: 500;">NATIONWIDE SHIPPING</div>
+            <div class="hero-metric-val" style="font-weight: 700; font-size: 1.125rem; color: var(--text-primary);">PKR 150</div>
+            <div class="hero-metric-label" style="font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; font-weight: 500;">NATIONWIDE SHIPPING</div>
           </div>
           <div>
-            <div style="font-weight: 700; font-size: 1.125rem; color: var(--text-primary);">7 DAYS</div>
-            <div style="font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; font-weight: 500;">RETURN POLICY</div>
+            <div class="hero-metric-val" style="font-weight: 700; font-size: 1.125rem; color: var(--text-primary);">7 DAYS</div>
+            <div class="hero-metric-label" style="font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; font-weight: 500;">RETURN POLICY</div>
           </div>
           <div>
-            <div style="font-weight: 700; font-size: 1.125rem; color: var(--text-primary);">COD</div>
-            <div style="font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; font-weight: 500;">CASH ON ARRIVAL</div>
+            <div class="hero-metric-val" style="font-weight: 700; font-size: 1.125rem; color: var(--text-primary);">COD</div>
+            <div class="hero-metric-label" style="font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; font-weight: 500;">CASH ON ARRIVAL</div>
           </div>
         </div>
 
         <!-- CTAs -->
-        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; padding-top: 0.5rem;">
+        <div class="hero-cta-wrap">
           <a
             href="{% if featured_product != blank %}{{ featured_product.url }}{% else %}/products/adjustable-portable-laptop-stand{% endif %}"
             class="btn-primary"
@@ -82,7 +82,7 @@
 
       <!-- Right Column: Featured Physical Product Showcase -->
       <div>
-        <div class="reveal-on-scroll reveal-delay-1" style="border: 1px solid var(--border-main); background: var(--bg-surface-subtle); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; border-radius: var(--radius-xs); box-shadow: var(--shadow-sm);">
+        <div class="hero-showcase-card reveal-on-scroll reveal-delay-1">
           <!-- Top Badges -->
           <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-main);">
             <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">
@@ -96,7 +96,7 @@
           <!-- Product Image Frame -->
           <div
             id="heroStandFrame"
-            style="margin: 1.25rem 0; aspect-ratio: 4 / 3; background: var(--bg-surface); border: 1px solid var(--border-main); padding: 1.5rem; border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden;"
+            style="margin: 1.25rem 0; aspect-ratio: 4 / 3; background: var(--bg-surface); border: 1px solid var(--border-main); padding: 1rem; border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden;"
             onclick="window.location.href='{% if featured_product != blank %}{{ featured_product.url }}{% else %}/products/adjustable-portable-laptop-stand{% endif %}'"
           >
             <img
@@ -116,8 +116,8 @@
               <button
                 type="button"
                 id="heroBtnSilver"
-                class="btn-tech"
-                style="padding: 0.25rem 0.625rem; font-size: 0.6875rem; border-color: var(--accent-blue); color: var(--accent-blue); font-weight: 700; background: var(--accent-blue-subtle);"
+                class="btn-tech hero-finish-btn"
+                style="border-color: var(--accent-blue); color: var(--accent-blue); font-weight: 700; background: var(--accent-blue-subtle);"
                 onclick="setHeroVariant('Silver', '{{ silver_img }}', '{{ silver_variant.id }}')"
               >
                 <span style="display: inline-block; width: 8px; height: 8px; border-radius: 9999px; background: #D4D4D8; border: 1px solid #A1A1AA; margin-right: 4px;"></span>
@@ -126,8 +126,7 @@
               <button
                 type="button"
                 id="heroBtnBlack"
-                class="btn-tech"
-                style="padding: 0.25rem 0.625rem; font-size: 0.6875rem;"
+                class="btn-tech hero-finish-btn"
                 onclick="setHeroVariant('Black', '{{ black_img }}', '{{ black_variant.id }}')"
               >
                 <span style="display: inline-block; width: 8px; height: 8px; border-radius: 9999px; background: #18181B; border: 1px solid #71717A; margin-right: 4px;"></span>
@@ -140,15 +139,15 @@
           <div style="padding: 0.625rem 0; border-top: 1px solid var(--border-main); display: grid; grid-template-columns: 1fr 1fr; gap: 0.375rem; font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-muted);">
             <span style="display: flex; align-items: center; gap: 0.375rem;">
               <span class="status-dot" style="width: 5px; height: 5px;"></span>
-              Multi-Level Angle Riser
+              Multi-Level Riser
             </span>
             <span style="display: flex; align-items: center; gap: 0.375rem;">
               <span class="status-dot" style="width: 5px; height: 5px;"></span>
-              Passive Airflow Cooling
+              Cooling Airflow
             </span>
             <span style="display: flex; align-items: center; gap: 0.375rem;">
               <span class="status-dot" style="width: 5px; height: 5px;"></span>
-              Silicone Non-Slip Grip
+              Non-Slip Silicone
             </span>
             <span style="display: flex; align-items: center; gap: 0.375rem;">
               <span class="status-dot" style="width: 5px; height: 5px;"></span>
@@ -172,15 +171,14 @@
             <div style="display: flex; align-items: center; gap: 0.5rem;">
               <a
                 href="{% if featured_product != blank %}{{ featured_product.url }}{% else %}/products/adjustable-portable-laptop-stand{% endif %}"
-                class="btn-tech"
+                class="btn-tech hero-details-btn"
               >
                 DETAILS
               </a>
               <button
                 type="button"
                 id="heroOrderBtn"
-                class="btn-primary"
-                style="padding: 0.625rem 1rem;"
+                class="btn-primary hero-order-btn"
                 onclick="orderHeroStand()"
               >
                 ORDER NOW
@@ -235,6 +233,86 @@
 </script>
 
 <style>
+  .hero-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.875rem, 5.5vw, 2.5rem);
+    line-height: 1.08;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  .hero-metrics-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    padding: 0.875rem 0;
+    border-top: 1px solid var(--border-main);
+    border-bottom: 1px solid var(--border-main);
+    max-width: 32rem;
+    font-family: var(--font-tech);
+  }
+  @media (max-width: 380px) {
+    .hero-metrics-row {
+      gap: 0.5rem;
+    }
+    .hero-metric-label {
+      font-size: 0.5625rem !important;
+    }
+    .hero-metric-val {
+      font-size: 0.9375rem !important;
+    }
+  }
+  .hero-cta-wrap {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding-top: 0.5rem;
+  }
+  @media (max-width: 639px) {
+    .hero-cta-wrap a {
+      width: 100%;
+      min-height: 48px;
+    }
+  }
+  .hero-showcase-card {
+    border: 1px solid var(--border-main);
+    background: var(--bg-surface-subtle);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: var(--radius-xs);
+    box-shadow: var(--shadow-sm);
+  }
+  @media (min-width: 640px) {
+    .hero-showcase-card {
+      padding: 1.5rem;
+    }
+  }
+  .hero-finish-btn {
+    min-height: 38px;
+    padding: 0.375rem 0.625rem;
+    font-size: 0.6875rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-order-btn {
+    min-height: 44px;
+    padding: 0.625rem 1.125rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-details-btn {
+    min-height: 44px;
+    padding: 0.625rem 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
   @media (min-width: 900px) {
     .hero-grid {
       grid-template-columns: 7fr 6fr !important;

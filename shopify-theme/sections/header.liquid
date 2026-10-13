@@ -2,56 +2,87 @@
   <div class="dexy-container">
     <div class="header-inner">
       <!-- Brand Logo -->
-      <a href="{{ routes.root_url }}" style="display: inline-flex; align-items: center; gap: 0.625rem; text-decoration: none;">
-        <div style="background-color: #09090B; padding: 2px; border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; overflow: hidden;">
+      <a href="{{ routes.root_url }}" class="header-logo-link" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; min-width: 0;">
+        <div style="background-color: #09090B; padding: 2px; border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden;">
           {% if section.settings.logo != blank %}
-            <img src="{{ section.settings.logo | image_url: height: 36 }}" alt="{{ shop.name }}" style="height: 2.25rem; width: auto; object-fit: contain;">
+            <img src="{{ section.settings.logo | image_url: height: 36 }}" alt="{{ shop.name }}" style="height: 2rem; width: auto; object-fit: contain;">
           {% else %}
-            <img src="{{ 'dexyfied-logo-raw.jpg' | asset_url }}" alt="DEXYFIED Mark" style="height: 2.25rem; width: auto; object-fit: contain; mix-blend-mode: screen; filter: contrast(1.25) brightness(1.1);">
+            <img src="{{ 'dexyfied-logo-raw.jpg' | asset_url }}" alt="DEXYFIED Mark" style="height: 2rem; width: auto; object-fit: contain; mix-blend-mode: screen; filter: contrast(1.25) brightness(1.1);">
           {% endif %}
         </div>
-        <div style="display: flex; flex-direction: column; justify-content: center; line-height: 1;">
-          <span style="font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-primary);">
+        <div style="display: flex; flex-direction: column; justify-content: center; line-height: 1; min-width: 0;">
+          <span class="header-brand-name">
             {{ shop.name | default: 'DEXYFIED' }}
           </span>
-          <span style="font-family: var(--font-tech); font-size: 0.625rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text-dim); margin-top: 2px;">
+          <span class="header-brand-sub">
             HARDWARE // PAKISTAN
           </span>
         </div>
       </a>
 
       <!-- Desktop Navigation -->
+      {%- liquid
+        assign menu_links = linklists[section.settings.menu].links
+        assign has_categories = false
+        assign has_about = false
+        assign has_contact = false
+
+        for link in menu_links
+          assign l_url = link.url | downcase
+          assign l_title = link.title | downcase
+          if l_url contains 'categories' or l_url == routes.collections_url or l_title contains 'categor'
+            assign has_categories = true
+          endif
+          if l_url contains 'about' or l_title contains 'about'
+            assign has_about = true
+          endif
+          if l_url contains 'contact' or l_title contains 'contact'
+            assign has_contact = true
+          endif
+        endfor
+      -%}
+
       <nav class="nav-links" style="display: none;">
-        {% for link in linklists[section.settings.menu].links %}
-          <a
-            href="{{ link.url }}"
-            class="nav-link {% if link.active %}active{% endif %}"
-          >
-            {{ link.title }}
-          </a>
+        {% if menu_links.size > 0 %}
+          {% for link in menu_links %}
+            <a
+              href="{{ link.url }}"
+              class="nav-link {% if link.active or request.path == link.url %}active{% endif %}"
+            >
+              {{ link.title }}
+            </a>
+          {% endfor %}
+          {% unless has_categories %}
+            <a href="{{ routes.collections_url }}" class="nav-link {% if request.path == routes.collections_url %}active{% endif %}">
+              Categories
+            </a>
+          {% endunless %}
+          {% unless has_about %}
+            <a href="/pages/about" class="nav-link {% if request.path contains '/pages/about' %}active{% endif %}">
+              About
+            </a>
+          {% endunless %}
+          {% unless has_contact %}
+            <a href="/pages/contact" class="nav-link {% if request.path contains '/pages/contact' %}active{% endif %}">
+              Contact
+            </a>
+          {% endunless %}
         {% else %}
-          <a href="{{ routes.root_url }}" class="nav-link active">Home</a>
-          <a href="{{ routes.all_products_collection_url }}" class="nav-link">Shop</a>
-          <a href="/pages/about" class="nav-link">About</a>
-          <a href="/pages/contact" class="nav-link">Contact</a>
-        {% endfor %}
+          <a href="{{ routes.root_url }}" class="nav-link {% if request.path == routes.root_url %}active{% endif %}">Home</a>
+          <a href="{{ routes.all_products_collection_url }}" class="nav-link {% if request.path == routes.all_products_collection_url %}active{% endif %}">Catalog</a>
+          <a href="{{ routes.collections_url }}" class="nav-link {% if request.path == routes.collections_url %}active{% endif %}">Categories</a>
+          <a href="/pages/about" class="nav-link {% if request.path contains '/pages/about' %}active{% endif %}">About</a>
+          <a href="/pages/contact" class="nav-link {% if request.path contains '/pages/contact' %}active{% endif %}">Contact</a>
+        {% endif %}
       </nav>
 
-      <!-- Desktop Navigation Responsive Display CSS -->
-      <style>
-        @media (min-width: 768px) {
-          .nav-links { display: flex !important; }
-        }
-      </style>
-
       <!-- Actions (Theme Toggle + Search + Cart + Mobile Hamburger) -->
-      <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <!-- Dark/Light Mode Switcher -->
+      <div style="display: flex; align-items: center; gap: 0.375rem; flex-shrink: 0;">
+        <!-- Dark/Light Mode Switcher (Visible on desktop/tablet, hidden on mobile where it's in the mobile menu) -->
         <button
           type="button"
           data-theme-toggle
-          class="btn-tech"
-          style="padding: 0.5rem; border-color: var(--border-main);"
+          class="btn-tech header-theme-toggle"
           aria-label="Toggle theme mode"
           title="Toggle dark/light theme"
         >
@@ -64,8 +95,7 @@
         <button
           type="button"
           data-search-trigger
-          class="btn-tech"
-          style="padding: 0.5rem; border-color: var(--border-main);"
+          class="btn-tech header-action-btn"
           aria-label="Search catalog"
           title="Search products"
         >
@@ -79,8 +109,7 @@
         <button
           type="button"
           data-cart-open
-          class="btn-tech"
-          style="padding: 0.5rem 0.75rem; border-color: var(--border-main); display: flex; align-items: center; gap: 0.375rem; background: var(--bg-surface); position: relative;"
+          class="btn-tech header-cart-btn"
           aria-label="Open cart bag"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -97,8 +126,7 @@
         <button
           type="button"
           data-mobile-menu-toggle
-          class="btn-tech md-hidden"
-          style="padding: 0.5rem;"
+          class="btn-tech header-action-btn md-hidden"
           aria-label="Toggle navigation menu"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -115,28 +143,59 @@
   <div
     data-mobile-menu
     class="hidden"
-    style="display: none; border-top: 1px solid var(--border-main); background: var(--bg-surface); padding: 1.5rem 1rem; box-shadow: var(--shadow-md);"
+    style="display: none; border-top: 1px solid var(--border-main); background: var(--bg-surface); padding: 1.25rem 1rem; box-shadow: var(--shadow-md);"
   >
-    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-      {% for link in linklists[section.settings.menu].links %}
-        <a
-          href="{{ link.url }}"
-          style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.5rem 0.75rem; border-radius: var(--radius-xs); color: {% if link.active %}var(--accent-blue){% else %}var(--text-primary){% endif %}; font-weight: {% if link.active %}700{% else %}500{% endif %}; background: {% if link.active %}var(--bg-surface-elevated){% else %}transparent{% endif %};"
-        >
-          {{ link.title }}
-        </a>
+    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+      {% if menu_links.size > 0 %}
+        {% for link in menu_links %}
+          <a
+            href="{{ link.url }}"
+            class="mobile-menu-item"
+            style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center; border-radius: var(--radius-xs); color: {% if link.active or request.path == link.url %}var(--accent-blue){% else %}var(--text-primary){% endif %}; font-weight: {% if link.active or request.path == link.url %}700{% else %}500{% endif %}; background: {% if link.active or request.path == link.url %}var(--bg-surface-elevated){% else %}transparent{% endif %};"
+          >
+            {{ link.title }}
+          </a>
+        {% endfor %}
+        {% unless has_categories %}
+          <a
+            href="{{ routes.collections_url }}"
+            class="mobile-menu-item"
+            style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center; border-radius: var(--radius-xs); color: {% if request.path == routes.collections_url %}var(--accent-blue){% else %}var(--text-primary){% endif %}; font-weight: {% if request.path == routes.collections_url %}700{% else %}500{% endif %}; background: {% if request.path == routes.collections_url %}var(--bg-surface-elevated){% else %}transparent{% endif %};"
+          >
+            Categories
+          </a>
+        {% endunless %}
+        {% unless has_about %}
+          <a
+            href="/pages/about"
+            class="mobile-menu-item"
+            style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center; border-radius: var(--radius-xs); color: {% if request.path contains '/pages/about' %}var(--accent-blue){% else %}var(--text-primary){% endif %}; font-weight: {% if request.path contains '/pages/about' %}700{% else %}500{% endif %}; background: {% if request.path contains '/pages/about' %}var(--bg-surface-elevated){% else %}transparent{% endif %};"
+          >
+            About
+          </a>
+        {% endunless %}
+        {% unless has_contact %}
+          <a
+            href="/pages/contact"
+            class="mobile-menu-item"
+            style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center; border-radius: var(--radius-xs); color: {% if request.path contains '/pages/contact' %}var(--accent-blue){% else %}var(--text-primary){% endif %}; font-weight: {% if request.path contains '/pages/contact' %}700{% else %}500{% endif %}; background: {% if request.path contains '/pages/contact' %}var(--bg-surface-elevated){% else %}transparent{% endif %};"
+          >
+            Contact
+          </a>
+        {% endunless %}
       {% else %}
-        <a href="{{ routes.root_url }}" style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; padding: 0.5rem;">Home</a>
-        <a href="{{ routes.all_products_collection_url }}" style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; padding: 0.5rem;">Shop</a>
-        <a href="/pages/about" style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; padding: 0.5rem;">About</a>
-        <a href="/pages/contact" style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; padding: 0.5rem;">Contact</a>
-      {% endfor %}
+        <a href="{{ routes.root_url }}" style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center;">Home</a>
+        <a href="{{ routes.all_products_collection_url }}" style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center;">Catalog</a>
+        <a href="{{ routes.collections_url }}" style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center;">Categories</a>
+        <a href="/pages/about" style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center;">About</a>
+        <a href="/pages/contact" style="font-family: var(--font-display); font-size: 0.875rem; text-transform: uppercase; padding: 0.625rem 0.75rem; min-height: 44px; display: flex; align-items: center;">Contact</a>
+      {% endif %}
     </div>
 
-    <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-main); font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-dim); display: flex; flex-direction: column; gap: 0.5rem;">
+    <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-main); font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-dim); display: flex; flex-direction: column; gap: 0.625rem;">
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <span>THEME MODE:</span>
-        <button type="button" data-theme-toggle class="btn-tech" style="padding: 0.25rem 0.5rem; font-size: 0.6875rem;">
+        <button type="button" data-theme-toggle class="btn-tech" style="padding: 0.375rem 0.75rem; font-size: 0.6875rem; min-height: 38px;">
           SWITCH THEME
         </button>
       </div>
@@ -147,8 +206,70 @@
 </header>
 
 <style>
+  .header-brand-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.125rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+  @media (min-width: 640px) {
+    .header-brand-name {
+      font-size: 1.25rem;
+      letter-spacing: 0.18em;
+    }
+  }
+  .header-brand-sub {
+    font-family: var(--font-tech);
+    font-size: 0.5625rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+  @media (max-width: 374px) {
+    .header-brand-sub {
+      display: none;
+    }
+  }
+  .header-action-btn {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-color: var(--border-main);
+  }
+  .header-theme-toggle {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0.5rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border-color: var(--border-main);
+  }
+  .header-cart-btn {
+    min-height: 40px;
+    padding: 0.5rem 0.625rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    background: var(--bg-surface);
+    border-color: var(--border-main);
+  }
   @media (min-width: 768px) {
+    .nav-links { display: flex !important; }
     .md-hidden { display: none !important; }
+    .header-theme-toggle { display: inline-flex !important; }
+    .header-action-btn, .header-theme-toggle, .header-cart-btn {
+      min-width: 44px;
+      min-height: 44px;
+    }
   }
 </style>
 

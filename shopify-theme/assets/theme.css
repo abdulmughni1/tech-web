@@ -65,6 +65,8 @@ html {
   font-size: 16px;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -76,6 +78,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  max-width: 100vw;
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   min-height: 100vh;
 }
@@ -88,6 +91,13 @@ img, svg, picture, video {
 input, button, textarea, select {
   font: inherit;
   color: inherit;
+}
+
+/* Mobile Form Inputs: prevent iOS auto-zoom on focus (< 768px) */
+@media (max-width: 767px) {
+  input, select, textarea, .form-input {
+    font-size: 16px !important;
+  }
 }
 
 a {
@@ -126,6 +136,13 @@ button {
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
+  width: 100%;
+}
+@media (max-width: 374px) {
+  .dexy-container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
 }
 @media (min-width: 640px) {
   .dexy-container {
@@ -138,6 +155,15 @@ button {
     padding-left: 2rem;
     padding-right: 2rem;
   }
+}
+
+/* Touch Target Accessibility Helpers */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Technical Badges & Tags */
@@ -453,7 +479,7 @@ button {
   right: 0;
   bottom: 0;
   width: 100%;
-  max-width: 28rem;
+  max-width: min(100vw, 28rem);
   background-color: var(--bg-surface);
   border-left: 1px solid var(--border-main);
   box-shadow: var(--shadow-2xl);
@@ -476,16 +502,72 @@ button {
   justify-content: space-between;
 }
 
+.cart-drawer-close {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-main);
+  color: var(--text-muted);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.15s ease;
+}
+.cart-drawer-close:hover {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
 .cart-drawer-body {
   flex: 1;
   overflow-y: auto;
   padding: 1.25rem;
+  -webkit-overflow-scrolling: touch;
 }
 
 .cart-drawer-footer {
-  padding: 1.25rem;
+  padding: 1.25rem 1.25rem calc(1.25rem + env(safe-area-inset-bottom, 0px)) 1.25rem;
   border-top: 1px solid var(--border-main);
   background-color: var(--bg-surface-elevated);
+}
+
+.cart-qty-btn {
+  min-width: 38px;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-tech);
+  font-size: 1rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.cart-qty-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+}
+
+.cart-item-remove {
+  min-width: 36px;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dim);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-xs);
+  transition: all 0.15s ease;
+}
+.cart-item-remove:hover {
+  color: #DC2626;
+  background-color: rgba(220, 38, 38, 0.08);
 }
 
 /* Mobile Sticky Bar on PDP */
@@ -503,7 +585,7 @@ button {
     background-color: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(8px);
     border-top: 1px solid var(--border-main);
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom, 0px)) 1rem;
     box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
     align-items: center;
     justify-content: space-between;

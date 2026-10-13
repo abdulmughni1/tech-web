@@ -184,17 +184,17 @@ const DexyfiedCart = {
       }
 
       html += `
-        <div style="display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border-main);" data-line-key="${lineKey}">
-          <div style="width: 5rem; height: 5rem; background: var(--bg-surface-elevated); border: 1px solid var(--border-main); display: flex; align-items: center; justify-content: center; padding: 0.5rem; flex-shrink: 0; border-radius: var(--radius-xs);">
+        <div style="display: flex; gap: 0.875rem; padding: 1rem 0; border-bottom: 1px solid var(--border-main);" data-line-key="${lineKey}">
+          <div style="width: 4.5rem; height: 4.5rem; background: var(--bg-surface-elevated); border: 1px solid var(--border-main); display: flex; align-items: center; justify-content: center; padding: 0.375rem; flex-shrink: 0; border-radius: var(--radius-xs);">
             <img src="${item.featured_image ? item.featured_image.url : ''}" alt="${item.title}" style="max-height: 100%; max-width: 100%; object-fit: contain;">
           </div>
-          <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
+          <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-width: 0;">
             <div>
               <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;">
                 <h4 style="font-family: var(--font-display); font-size: 0.875rem; font-weight: 600; color: var(--text-primary); line-height: 1.25; margin: 0;">
                   <a href="${item.url}">${item.product_title}</a>
                 </h4>
-                <button onclick="DexyfiedCart.updateItem('${lineKey}', 0)" style="color: var(--text-dim); padding: 2px;" title="Remove">✕</button>
+                <button type="button" onclick="DexyfiedCart.updateItem('${lineKey}', 0)" class="cart-item-remove" title="Remove" aria-label="Remove item">✕</button>
               </div>
               ${item.variant_title && item.variant_title !== 'Default Title' ? `
                 <div style="font-family: var(--font-tech); font-size: 11px; font-weight: bold; text-transform: uppercase; margin-top: 2px; color: var(--text-primary);">
@@ -206,9 +206,9 @@ const DexyfiedCart = {
 
             <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.75rem;">
               <div style="display: flex; align-items: center; border: 1px solid var(--border-main); background: var(--bg-surface-elevated); border-radius: var(--radius-xs);">
-                <button onclick="DexyfiedCart.updateItem('${lineKey}', ${item.quantity - 1})" style="padding: 0.25rem 0.5rem; color: var(--text-muted); font-family: var(--font-tech); font-size: 0.75rem;">-</button>
-                <span style="font-family: var(--font-tech); font-size: 0.75rem; font-weight: bold; padding: 0 0.5rem;">${item.quantity}</span>
-                <button onclick="DexyfiedCart.updateItem('${lineKey}', ${item.quantity + 1})" style="padding: 0.25rem 0.5rem; color: var(--text-muted); font-family: var(--font-tech); font-size: 0.75rem;">+</button>
+                <button type="button" onclick="DexyfiedCart.updateItem('${lineKey}', ${item.quantity - 1})" class="cart-qty-btn" aria-label="Decrease quantity">-</button>
+                <span style="font-family: var(--font-tech); font-size: 0.8125rem; font-weight: bold; padding: 0 0.5rem;">${item.quantity}</span>
+                <button type="button" onclick="DexyfiedCart.updateItem('${lineKey}', ${item.quantity + 1})" class="cart-qty-btn" aria-label="Increase quantity">+</button>
               </div>
               <div style="font-family: var(--font-tech); font-size: 0.875rem; font-weight: bold; color: var(--text-primary);">
                 ${this.formatMoney(item.final_line_price)}

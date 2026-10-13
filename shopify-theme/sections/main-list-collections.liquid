@@ -1,0 +1,366 @@
+{% comment %}
+  DEXYFIED Official Categories & Collections Directory
+  Renders the 4 curated hardware classifications (Workspace, Audio, Smart Watches, Wearables)
+  with dynamic Shopify collections integration, fallback imagery, and zero-404 link safety.
+{% endcomment %}
+
+{%- liquid
+  # Resolve collection handles with graceful fallbacks
+  assign ws_collection = collections['workspace']
+  assign ws_url = '/collections/all?category=workspace'
+  if ws_collection != blank and ws_collection.products_count > 0
+    assign ws_url = ws_collection.url
+  endif
+
+  assign audio_collection = collections['audio']
+  assign audio_url = '/collections/all?category=audio'
+  if audio_collection != blank and audio_collection.products_count > 0
+    assign audio_url = audio_collection.url
+  endif
+
+  assign sw_collection = collections['smart-watches']
+  assign sw_url = '/collections/all?category=smart+watches'
+  if sw_collection != blank and sw_collection.products_count > 0
+    assign sw_url = sw_collection.url
+  endif
+
+  assign wear_collection = collections['wearables']
+  assign wear_url = '/collections/all?category=wearables'
+  if wear_collection != blank and wear_collection.products_count > 0
+    assign wear_url = wear_collection.url
+  endif
+-%}
+
+<div style="background-color: var(--bg-surface); padding-top: 3rem; padding-bottom: 6rem;">
+  <div class="dexy-container">
+    <!-- Header -->
+    <div style="padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-main); margin-bottom: 2.5rem;" class="reveal-on-scroll">
+      <div style="display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; font-weight: 700;">
+        <span class="status-dot status-dot-blue"></span>
+        <span>DEXYFIED TAXONOMY // HARDWARE CLASSIFICATIONS</span>
+      </div>
+      <div class="categories-header-flex">
+        <div>
+          <h1 style="font-family: var(--font-display); font-weight: 700; font-size: 2.25rem; text-transform: uppercase; color: var(--text-primary); margin: 0; line-height: 1.15;">
+            {{ section.settings.title | default: 'Hardware Categories' }}
+          </h1>
+          <p style="font-family: var(--font-sans); font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.5rem; max-width: 38rem;">
+            {{ section.settings.description | default: 'Browse physical consumer technology organized by functional hardware classifications.' }}
+          </p>
+        </div>
+
+        <div style="font-family: var(--font-tech); font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 600;">
+          CLASSIFICATIONS // 4 CATEGORIES
+        </div>
+      </div>
+    </div>
+
+    <!-- Curated Hardware Categories Grid -->
+    <div class="categories-grid">
+      <!-- 01. Workspace Gear -->
+      <div class="category-card reveal-on-scroll">
+        <a href="{{ ws_url }}" class="category-card-img-wrap" aria-label="Browse Workspace Gear">
+          <span class="category-ref-badge">CAT-01 // WORKSPACE</span>
+          <img
+            src="{{ 'laptop-stand-silver.png' | asset_url }}"
+            alt="Workspace Hardware - Laptop Desktop Stand"
+            loading="lazy"
+            width="320"
+            height="320"
+          >
+        </a>
+        <div class="category-card-body">
+          <div>
+            <div style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.25rem; font-weight: 600;">
+              ERGONOMIC STANDS &amp; RISERS
+            </div>
+            <h2 class="category-card-title">
+              <a href="{{ ws_url }}">Workspace Gear</a>
+            </h2>
+            <p class="category-card-desc">
+              Multi-angle adjustable desktop stands engineered to elevate laptop screens to eye level and improve cooling airflow.
+            </p>
+          </div>
+          <div class="category-card-footer">
+            <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase;">
+              ITEM DX-01 • 2 FINISHES
+            </span>
+            <a href="{{ ws_url }}" class="btn-tech" style="padding: 0.375rem 0.625rem; font-size: 0.6875rem;">
+              EXPLORE ↗
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 02. Audio & Cases -->
+      <div class="category-card reveal-on-scroll reveal-delay-1">
+        <a href="{{ audio_url }}" class="category-card-img-wrap" aria-label="Browse Audio and Smart Cases">
+          <span class="category-ref-badge">CAT-02 // AUDIO</span>
+          <img
+            src="{{ 'airpods-case-black.png' | asset_url }}"
+            alt="Audio Hardware - Touch Screen AirPods Case and Over-Ear Headphones"
+            loading="lazy"
+            width="320"
+            height="320"
+          >
+        </a>
+        <div class="category-card-body">
+          <div>
+            <div style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.25rem; font-weight: 600;">
+              SMART CASES &amp; HEADPHONES
+            </div>
+            <h2 class="category-card-title">
+              <a href="{{ audio_url }}">Audio &amp; Cases</a>
+            </h2>
+            <p class="category-card-desc">
+              Wireless in-ear audio cases with interactive front touch screens and circumaural over-ear stereo headphones.
+            </p>
+          </div>
+          <div class="category-card-footer">
+            <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase;">
+              ITEMS DX-02, DX-03
+            </span>
+            <a href="{{ audio_url }}" class="btn-tech" style="padding: 0.375rem 0.625rem; font-size: 0.6875rem;">
+              EXPLORE ↗
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 03. Smart Watches -->
+      <div class="category-card reveal-on-scroll reveal-delay-2">
+        <a href="{{ sw_url }}" class="category-card-img-wrap" aria-label="Browse Smart Watches">
+          <span class="category-ref-badge">CAT-03 // SMART WATCHES</span>
+          <img
+            src="{{ 'i9-ultra-max.png' | asset_url }}"
+            alt="Smart Watches - i9 Ultra Max and T900 Ultra 2"
+            loading="lazy"
+            width="320"
+            height="320"
+          >
+        </a>
+        <div class="category-card-body">
+          <div>
+            <div style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.25rem; font-weight: 600;">
+              CONNECTED TIMEPIECES
+            </div>
+            <h2 class="category-card-title">
+              <a href="{{ sw_url }}">Smart Watches</a>
+            </h2>
+            <p class="category-card-desc">
+              Expansive IPS display smartwatches featuring Bluetooth 5.3 calling, notifications from WhatsApp &amp; Instagram, and fitness sensors.
+            </p>
+          </div>
+          <div class="category-card-footer">
+            <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase;">
+              ITEMS DX-06, 07, 08
+            </span>
+            <a href="{{ sw_url }}" class="btn-tech" style="padding: 0.375rem 0.625rem; font-size: 0.6875rem;">
+              EXPLORE ↗
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04. Wearables -->
+      <div class="category-card reveal-on-scroll reveal-delay-3">
+        <a href="{{ wear_url }}" class="category-card-img-wrap" aria-label="Browse Wearable Technology">
+          <span class="category-ref-badge">CAT-04 // WEARABLES</span>
+          <img
+            src="{{ 'luminous-ring.png' | asset_url }}"
+            alt="Wearable Hardware - Luminous Heartbeat Finger Ring"
+            loading="lazy"
+            width="320"
+            height="320"
+          >
+        </a>
+        <div class="category-card-body">
+          <div>
+            <div style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.25rem; font-weight: 600;">
+              BIO-AESTHETIC GEAR
+            </div>
+            <h2 class="category-card-title">
+              <a href="{{ wear_url }}">Wearables</a>
+            </h2>
+            <p class="category-card-desc">
+              Photo-luminescent heartbeat wave rings and personal wearable accessories engineered for everyday comfort.
+            </p>
+          </div>
+          <div class="category-card-footer">
+            <span style="font-family: var(--font-tech); font-size: 0.6875rem; color: var(--text-muted); text-transform: uppercase;">
+              ITEM DX-04 • SIZES 6-12
+            </span>
+            <a href="{{ wear_url }}" class="btn-tech category-explore-btn">
+              EXPLORE ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Catalog Quick Action -->
+    <div style="margin-top: 3.5rem; padding: 1.5rem; border: 1px solid var(--border-main); background-color: var(--bg-surface-subtle); border-radius: var(--radius-xs); display: flex; flex-direction: column; gap: 1rem;" class="reveal-on-scroll">
+      <div style="display: flex; flex-direction: column; sm:flex-direction: row; justify-content: space-between; align-items: flex-start; sm:align-items: center; gap: 1rem;">
+        <div>
+          <h3 style="font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; text-transform: uppercase; color: var(--text-primary); margin: 0 0 0.25rem 0;">
+            Looking for all hardware in one place?
+          </h3>
+          <p style="font-family: var(--font-sans); font-size: 0.8125rem; color: var(--text-muted); margin: 0;">
+            View our interactive product directory with live price sliders and instant category filtering.
+          </p>
+        </div>
+        <a
+          href="{{ routes.all_products_collection_url }}"
+          class="btn-tech-primary"
+          style="padding: 0.75rem 1.25rem; font-size: 0.75rem; letter-spacing: 0.08em; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; gap: 0.5rem; text-decoration: none; flex-shrink: 0;"
+        >
+          <span>BROWSE FULL CATALOG</span>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .categories-header-flex {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  @media (min-width: 640px) {
+    .categories-header-flex {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+  }
+  .categories-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .categories-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .categories-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+  }
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-main);
+    border-radius: var(--radius-xs);
+    box-shadow: var(--shadow-2xs);
+    overflow: hidden;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, box-shadow 0.25s ease;
+  }
+  .category-card:hover {
+    border-color: var(--text-primary);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+  }
+  .dark .category-card:hover, [data-theme="dark"] .category-card:hover {
+    border-color: var(--border-bright);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.45);
+  }
+  .category-card-img-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    background-color: var(--bg-surface-subtle);
+    border-bottom: 1px solid var(--border-main);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-decoration: none;
+  }
+  .category-card-img-wrap img {
+    max-height: 85%;
+    max-width: 85%;
+    object-fit: contain;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .category-card:hover .category-card-img-wrap img {
+    transform: scale(1.05);
+  }
+  .category-ref-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    font-family: var(--font-tech);
+    font-size: 0.625rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  .category-card-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+  }
+  .category-card-title {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.25;
+  }
+  .category-card-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .category-card-title a:hover {
+    color: var(--accent-blue);
+  }
+  .category-card-desc {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .category-card-footer {
+    margin-top: 1.25rem;
+    padding-top: 0.875rem;
+    border-top: 1px solid var(--border-main);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hardware Categories",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Hardware Categories"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description",
+      "default": "Browse physical consumer technology organized by functional hardware classifications."
+    }
+  ]
+}
+{% endschema %}
